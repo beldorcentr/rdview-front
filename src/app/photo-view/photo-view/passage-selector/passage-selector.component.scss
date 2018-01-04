@@ -1,0 +1,137 @@
+$passage-color: #FFFF00;
+$selected-passage-color: #FF0000;
+
+$passage-arrows-color: darken($passage-color, 20%);
+$selected-passage-arrows-color: darken($selected-passage-color, 20%);
+
+$arrows-left-direction: 45deg;
+$arrows-right-direction: 135deg;
+
+.passage-selector {
+  overflow: hidden;
+  position: relative;
+}
+
+.milestones {
+  height: 1.5em;
+}
+
+.milestone {
+  position: absolute;
+  top: 0;
+  width: 2em;
+  height: 100%;
+  margin-left: -1em;
+}
+
+.passages {
+  position: relative;
+  max-height: 15em;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.passage {
+  background-color: $passage-color;
+  box-sizing: border-box;
+  margin: .3em 0;
+  min-width: 1em;
+  height: 1.8em;
+  position: relative;
+}
+
+.passage span {
+  vertical-align: middle;
+  line-height: 1.8em;
+  pointer-events: none;
+  position: relative;
+  font-weight: 700;
+}
+
+.passage.selected {
+  background-color: $selected-passage-color;
+}
+
+.kmmark {
+  border-left: 1px dashed grey;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  pointer-events: none;
+}
+
+.current-position {
+  width: 4px;
+  margin-left: -2px;
+  background-color:black;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  pointer-events: none;
+}
+
+.position-tooltip {
+  position: fixed;
+  pointer-events: none;
+  background-color: white;
+  width: 200px;
+  margin-left: -200px;
+  height: 50px;
+  margin-top: -50px;
+}
+
+.passage .top,
+.passage .bottom {
+  position: absolute;
+  height: 50%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.passage .top {
+  top: 0;
+}
+
+.passage .bottom {
+  bottom: 0;
+}
+
+@mixin passage-background($color, $direction) {
+  background-image: 
+  repeating-linear-gradient(
+    $direction,
+    $color,
+    $color 10px,
+    transparent 10px,
+    transparent 40px
+  );
+}
+
+.passage.forward-direction .top {
+  @include passage-background($passage-arrows-color, $arrows-left-direction)
+}
+.passage.forward-direction .bottom {
+  @include passage-background($passage-arrows-color, $arrows-right-direction)
+}
+
+.passage.backward-direction .top {
+  @include passage-background($passage-arrows-color, $arrows-right-direction)
+}
+.passage.backward-direction .bottom {
+  @include passage-background($passage-arrows-color, $arrows-left-direction)
+}
+
+
+.passage.selected.forward-direction .top {
+  @include passage-background($selected-passage-arrows-color, $arrows-left-direction)
+}
+.passage.selected.forward-direction .bottom {
+  @include passage-background($selected-passage-arrows-color, $arrows-right-direction)
+}
+
+.passage.selected.backward-direction .top {
+  @include passage-background($selected-passage-arrows-color, $arrows-right-direction)
+}
+.passage.selected.backward-direction .bottom {
+  @include passage-background($selected-passage-arrows-color, $arrows-left-direction)
+}

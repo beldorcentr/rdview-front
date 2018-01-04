@@ -1,0 +1,43 @@
+<div class="passage-selector">
+  <div class="milestones">
+    <div class="milestone" *ngFor="let kmmark of kmMarks"
+        [style.left.%]="getPercentLeftDistanceForKm(kmmark)">
+      {{ kmmark }}
+    </div>
+  </div>
+  <div class="passages">
+    <div class="passage" *ngFor="let passage of passages"
+      [style.width.%]="getPercentWidthDistanceForKm(passage.endKm - passage.beginKm)"
+      [style.margin-left.%]="getPercentLeftDistanceForKm(passage.beginKm)"
+      [ngClass]="{
+        'selected': passage.id === selectedPassage.id,
+        'forward-direction': passage.direction === 'forward',
+        'backward-direction': passage.direction == 'backward'
+      }"
+      (mouseenter)="onMouseEnter(passage)"
+      (mousemove)="onMouseMove($event)"
+      (mouseleave)="onMouseLeave()"
+      (click)="onMouseClick($event)">
+      <div class="top"></div>
+      <div class="bottom"></div>
+      <span *ngIf="isDisplayDateForPassage(passage)">
+        {{ passage.date | date }}
+      </span>
+    </div>
+    <div class="kmmark" *ngFor="let kmmark of kmMarks"
+      [style.left.%]="getPercentWidthDistanceForKm(kmmark - beginKm)">
+    </div>
+    <div class="current-position" [style.left.%]="getPercentWidthDistanceForKm(currentKm - beginKm)">
+  
+    </div>
+  
+    <div class="position-tooltip" *ngIf="tooltipPassage"
+        [style.left.px]="tooltipX" [style.top.px]="tooltipY">
+      {{ tooltipPassage.date | date }}
+      {{ tooltipPassage.beginKm | number:'1.0-1' }} -
+      {{ tooltipPassage.endKm | number:'1.0-1' }}
+      {{ tooltipPassage.direction === 'forward' ? 'прямое' : 'обратное' }}
+      {{ tooltipKm | number:'1.0-1' }}
+    </div>
+  </div>
+</div>

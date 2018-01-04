@@ -1,0 +1,27 @@
+<div class="control-group">
+  <button type="button" class="btn btn-primary" (click)="startMovingBackward()"
+      [ngClass]="{ 'moving': isMovingBackward }" [disabled]="!isInited">
+    <i class="fa fa-fw fa-lg" [ngClass]="{
+        'fa-backward': !isMovingBackward || movingMultiplySpeed == 1,
+        'fa-step-backward': isMovingBackward && movingMultiplySpeed == 2,
+        'fa-fast-backward': isMovingBackward && movingMultiplySpeed == 4
+      }"></i>
+  </button>
+  <button type="button" class="btn btn-primary" (click)="previous()" [disabled]="!isInited">
+    <i class="fa fa-fw fa-lg fa-chevron-left"></i>
+  </button>
+  <button type="button" class="btn btn-primary" (click)="stop()" [disabled]="!isInited">
+    <i class="fa fa-fw fa-lg fa-pause"></i>
+  </button>
+  <button type="button" class="btn btn-primary" (click)="next()" [disabled]="!isInited">
+    <i class="fa fa-fw fa-lg fa-chevron-right"></i>
+  </button>
+  <button type="button" class="btn btn-primary" (click)="startMovingForward()"
+      [ngClass]="{ 'moving': isMovingForward }" [disabled]="!isInited">
+    <i class="fa fa-fw fa-lg" [ngClass]="{
+        'fa-forward': !isMovingForward || movingMultiplySpeed == 1,
+        'fa-step-forward': isMovingForward && movingMultiplySpeed == 2,
+        'fa-fast-forward': isMovingForward && movingMultiplySpeed == 4
+      }"></i>
+  </button>
+</div>

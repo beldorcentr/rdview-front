@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://i.centr.by/rdview",
+    "secure": true,
+    "changeOrigin": true
+  }
+}

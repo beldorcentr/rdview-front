@@ -1,0 +1,53 @@
+.row-container {
+  margin: .3em .3em;
+}
+
+.road-search-container {
+  width: calc(100% - 7em);
+  float: left;
+  position: relative;
+}
+
+.road-km-container {
+  width: 6.5em;
+  float: right;
+}
+
+.typeahead-status {
+  position: absolute;
+  top: 2.5em;
+  z-index: 5;
+  background-color: white;
+  padding: .5em;
+  max-width: 20em;
+  width: 20em;
+  text-align: center;
+}
+
+.road-search-template {
+  max-width: 20em;
+  width: 20em;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.road-name,
+.km {
+  width: 100%;
+}
+
+.coord {
+  width: 8.4em;
+  float: left;
+  padding-left: 0;
+  padding-right: .5em;
+}
+
+.coord input {
+  padding-left: .375em;
+  padding-right: .375em;
+}
+
+.search-buttons {
+  float: right;
+}
