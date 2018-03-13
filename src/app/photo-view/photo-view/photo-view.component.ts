@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild} from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit} from '@angular/core';
 import {
   RdviewService, CurrentPosition,
   Road, Segment, Passage, Photo, RoadService
@@ -8,13 +8,14 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { ResponseContentType } from '@angular/http';
 import { environment } from '../../../environments/environment';
 import { ToasterService } from 'angular2-toaster';
+import { mouseWheelZoom, MouseWheelZoom  } from 'mouse-wheel-zoom';
 
 @Component({
   selector: 'app-photo-view',
   templateUrl: './photo-view.component.html',
   styleUrls: ['./photo-view.component.scss']
 })
-export class PhotoViewComponent {
+export class PhotoViewComponent implements OnInit {
   photo: Photo;
   passages: Passage[];
   selectedPassage: Passage;
@@ -34,6 +35,8 @@ export class PhotoViewComponent {
   private roadService: RoadService;
   private authorizationHeader: string;
 
+  wheelZoom: MouseWheelZoom;
+
   @ViewChild('roadphoto') photoElement: ElementRef;
 
   constructor(private authService: AuthService,
@@ -50,6 +53,10 @@ export class PhotoViewComponent {
     this.roadService = new RoadService({
       authorization: this.authorizationHeader
     });
+  }
+
+  ngOnInit() {
+    this.wheelZoom = mouseWheelZoom({ element: this.photoElement.nativeElement });
   }
 
   nextPhoto() {
@@ -99,7 +106,7 @@ export class PhotoViewComponent {
       responseType: 'blob'
     }).toPromise()
       .then(response => {
-        this.photoElement.nativeElement.setAttribute('src', URL.createObjectURL(response));
+        this.wheelZoom.setSrcAndReset(URL.createObjectURL(response));
       }, err => {
         this.showImageLoadingError();
         this.photoElement.nativeElement.removeAttribute('src');
