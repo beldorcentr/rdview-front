@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import * as jwtDecode from 'jwt-decode';
 
 @Injectable()
 export class AuthService {
@@ -8,13 +9,19 @@ export class AuthService {
   private accessTokenKey = 'access_token';
   private tokenExpirationDateKey = 'token_expiration_date';
 
+  private payload;
+
   get isAuthorized(): boolean {
     const token = this.getToken();
     const expirationDate = this.getTokenExpirationDate();
     return token != null && token !== '' && expirationDate > new Date();
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    if (this.isAuthorized) {
+      this.payload = jwtDecode(this.getToken());
+    }
+  }
 
   login(username: string, password: string): Promise<string> {
     const body = new HttpParams({
@@ -38,6 +45,7 @@ export class AuthService {
         const expiresDate = new Date(new Date().getTime() + expiresIn * 1000);
         this.setTokenExpirationDate(expiresDate);
 
+        this.payload = jwtDecode(accessToken);
         return accessToken;
       });
   }
@@ -57,6 +65,14 @@ export class AuthService {
 
   getAuthorizationHeader(): string {
     return `Bearer ${this.getToken()}`;
+  }
+
+  getName(): string {
+    return this.payload.given_name;
+  }
+
+  getEmail(): string {
+    return this.payload.email;
   }
 
   private setToken(token: string) {

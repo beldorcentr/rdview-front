@@ -10,6 +10,7 @@ import { LoginModule } from './login/login.module';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { AppRoutingModule } from './app-routing.module';
 import { PhotoViewModule } from './photo-view/photo-view.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PhotoViewModule } from './photo-view/photo-view.module';
   ],
   imports: [
     BrowserModule,
+    CoreModule,
     RouterModule,
     LoginModule,
     PhotoViewModule,
