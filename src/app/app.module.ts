@@ -24,7 +24,7 @@ import { CoreModule } from './core/core.module';
     PhotoViewModule,
     SharedModule,
     AppRoutingModule,
-    ToasterModule
+    ToasterModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
