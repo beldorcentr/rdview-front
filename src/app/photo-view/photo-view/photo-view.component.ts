@@ -43,14 +43,25 @@ export class PhotoViewComponent implements OnInit {
       private http: HttpClient,
       private toasterService: ToasterService) {
 
+    this.initUserAuthData();
+
+    this.authService.getIsAuthorized().subscribe((isAuthorized) => {
+      if (!isAuthorized) {
+        return;
+      }
+      this.initUserAuthData();
+    });
+  }
+
+  initUserAuthData() {
     this.authorizationHeader = this.authService.getAuthorizationHeader();
 
-    this.rdviewService = new RdviewService({
-      apiUrl: environment.apiUrl,
+    this.roadService = new RoadService({
       authorization: this.authorizationHeader
     });
 
-    this.roadService = new RoadService({
+    this.rdviewService = new RdviewService({
+      apiUrl: environment.apiUrl,
       authorization: this.authorizationHeader
     });
   }

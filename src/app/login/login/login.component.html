@@ -1,50 +1,10 @@
 <div class="login-form">
   <form (ngSubmit)="login()" novalidate #loginForm="ngForm">
     <div class="title">
-      RDVIEW
+      Требуется вход в систему
     </div>
-    <div class="form-group">
-      <label for="username">
-        Пользователь
-        <input type="text" required class="form-control"
-          [ngClass]="{ 'is-invalid': !user.valid && !user.pristine }"
-          [(ngModel)]="username" name="user" #user="ngModel"
-          (input)="clearErrors()">
-      </label>
-      
-      <div [hidden]="user.valid || user.pristine" class="alert alert-danger">
-        Необходимо имя пользователя
-      </div>
-    </div>
-    <div class="form-group">
-      <label>
-        Пароль
-        <input type="password" required class="form-control"
-          [ngClass]="{ 'is-invalid': !pass.valid && !pass.pristine }"
-          [(ngModel)]="password" name="pass" #pass="ngModel"
-          (input)="clearErrors()">
-      </label>
-      <div [hidden]="pass.valid || pass.pristine" class="alert alert-danger">
-        Необходим пароль
-      </div>
-    </div>
-    <div class="form-group">
-      <button type="submit" [disabled]="!loginForm.form.valid || isLoading"
-          class="btn btn-primary btn-block">
-        Войти
-      </button>
-    </div>
-
-    <div class="status-container">
-      <div class="alert alert-danger" *ngIf="isHttpError">
-        Ошибка связи с сервером
-      </div>
-      <div class="alert alert-danger" *ngIf="isWrongCredentials">
-        Неправильное имя пользователя и пароль
-      </div>
-      <div class="alert alert-info" *ngIf="isLoading">
-        Загрузка
-      </div>
-    </div>
+    <button type="submit" class="btn btn-primary btn-block">
+      Войти
+    </button>
   </form>
 </div>

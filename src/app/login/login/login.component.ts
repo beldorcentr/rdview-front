@@ -10,46 +10,16 @@ import { HttpErrorResponse } from '@angular/common/http/src/response';
 })
 export class LoginComponent implements OnInit {
 
-  returnUrl: string;
-
-  isLoading: boolean;
-  isHttpError: boolean;
-  isWrongCredentials: boolean;
-
-  username: string;
-  password: string;
-
-  constructor(private authServer: AuthService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private authServer: AuthService) { }
 
   ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   login() {
-    this.isLoading = true;
-    this.isHttpError = false;
-    this.isWrongCredentials = false;
-
-    this.authServer.login(this.username, this.password)
-      .then(() => {
-        this.router.navigate([this.returnUrl]);
-      }, (err: HttpErrorResponse) => {
-        this.isLoading = false;
-
-        if (err.status === 400) {
-          this.isWrongCredentials = true;
-        } else {
-          this.isHttpError = true;
-        }
-      });
+    this.authServer.login();
   }
 
   logout() {
     this.authServer.logout();
-  }
-
-  clearErrors() {
-    this.isHttpError = false;
-    this.isWrongCredentials = false;
   }
 }
