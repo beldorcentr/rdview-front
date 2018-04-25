@@ -6,6 +6,10 @@
 export const environment = {
   production: false,
   apiUrl: 'api',
-  authorizationEndpoint: 'https://i.centr.by/oauth/token',
-  authorizationCliendId: '8ty7TVwSULs0aOMp8KZBK8WMGGvaakos'
+  authorizationEndpoint: 'https://i.centr.by/oauth2',
+  redirectUrl: 'http://localhost:4200',
+  postLogoutRedirectUrl: 'http://localhost:4200',
+  postLoginRoute: 'http://localhost:4200',
+  clientId: 'rdview_implicit',
+  maxTokenOffsetInSeconds: 300
 };
