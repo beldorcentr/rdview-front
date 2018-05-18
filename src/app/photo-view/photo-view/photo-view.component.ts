@@ -9,6 +9,7 @@ import { ResponseContentType } from '@angular/http';
 import { environment } from '../../../environments/environment';
 import { ToasterService } from 'angular2-toaster';
 import { mouseWheelZoom, MouseWheelZoom  } from 'mouse-wheel-zoom';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-photo-view',
@@ -41,6 +42,7 @@ export class PhotoViewComponent implements OnInit {
 
   constructor(private authService: AuthService,
       private http: HttpClient,
+      private router: Router,
       private toasterService: ToasterService) {
 
     this.initUserAuthData();
@@ -72,14 +74,14 @@ export class PhotoViewComponent implements OnInit {
 
   nextPhoto() {
     this.rdviewService.getNextPhoto()
-      .then(currentPosition => this.handleNewPosition(currentPosition))
-      .catch(() => this.showMovementError());
+      .then(currentPosition => this.handleNewPosition(currentPosition),
+        err => this.showMovementError(err));
   }
 
   previousPhoto() {
     this.rdviewService.getPreviousPhoto()
-      .then(currentPosition => this.handleNewPosition(currentPosition))
-      .catch(() => this.showMovementError());
+      .then(currentPosition => this.handleNewPosition(currentPosition),
+        err => this.showMovementError(err));
   }
 
   handleNewPosition(position: CurrentPosition) {
@@ -119,7 +121,7 @@ export class PhotoViewComponent implements OnInit {
       .then(response => {
         this.wheelZoom.setSrcAndReset(URL.createObjectURL(response));
       }, err => {
-        this.showImageLoadingError();
+        this.showImageLoadingError(err);
         this.photoElement.nativeElement.removeAttribute('src');
       });
   }
@@ -127,33 +129,51 @@ export class PhotoViewComponent implements OnInit {
   selectPassage(event: { passageId: string, km: number }) {
     this.rdviewService.setPassage(event.passageId, event.km)
       .then(currentPosition => this.handleNewPosition(currentPosition))
-      .catch(() => this.showMovementError());
+      .catch(err => this.showMovementError(err));
   }
 
   initByCoordinates({ lat, lon }: { lat: number, lon: number}) {
     this.isLoading = true;
     this.rdviewService.initByCoordinates(lat, lon)
-      .then(currentPosition => this.handleNewPosition(currentPosition))
-      .catch(() => this.showInitError());
+      .then(currentPosition => this.handleNewPosition(currentPosition),
+        err => this.showInitError(err));
   }
 
   initByRoad({ roadId, km }: { roadId: number, km: number }) {
     this.isLoading = true;
     this.rdviewService.initByRoad(roadId, km)
-      .then(currentPosition => this.handleNewPosition(currentPosition))
-      .catch(() => this.showInitError());
+      .then(currentPosition => this.handleNewPosition(currentPosition),
+        err => this.showInitError(err));
   }
 
-  showInitError() {
+  showInitError(err) {
+    this.handleAuthLoadingError(err);
     this.isLoading = false;
     this.toasterService.pop('error', 'Ошибка связи с сервером');
   }
 
-  showMovementError() {
+  showMovementError(err) {
+    this.handleAuthLoadingError(err);
     this.toasterService.pop('error', 'Ошибка выбора новой фотографии');
   }
 
-  showImageLoadingError() {
+  showImageLoadingError(err) {
+    this.handleAuthLoadingError(err);
     this.toasterService.pop('error', 'Ошибка загрузки фотографии');
+  }
+
+  handleAuthLoadingError(err) {
+    if (!err || !err.response) {
+      return;
+    }
+    switch (err.response.status) {
+      case 401:
+        this.router.navigate(['/login']);
+        break;
+      case 403:
+        this.router.navigate(['/forbidden']);
+        break;
+      default:
+    }
   }
 }

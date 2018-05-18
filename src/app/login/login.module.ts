@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { LoginRoutingModule } from './login-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
 
 @NgModule({
   imports: [
@@ -12,6 +13,9 @@ import { FormsModule } from '@angular/forms';
     SharedModule,
     LoginRoutingModule
   ],
-  declarations: [LoginComponent]
+  declarations: [
+    LoginComponent,
+    ForbiddenComponent
+  ]
 })
 export class LoginModule { }
