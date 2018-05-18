@@ -33,13 +33,17 @@
 <div class="row-container clearfix">
   <div class="coord">
     <div class="input-group">
-      <span class="input-group-addon">N</span>
+      <div class="input-group-prepend">
+        <span class="input-group-text">N</span>
+      </div>
       <input type="number" class="form-control" step="any" [(ngModel)]="lat">
     </div>
   </div>
   <div class="coord">
     <div class="input-group">
-      <span class="input-group-addon">E</span>
+        <div class="input-group-prepend">
+          <span class="input-group-text">E</span>
+        </div>
       <input type="number" class="form-control" step="any" [(ngModel)]="lon">
     </div>
   </div>
