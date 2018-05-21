@@ -69,7 +69,7 @@ export class PositionInitializerComponent implements OnChanges {
   initByRoad() {
     this.selectRoad.emit({
       roadId: this.roadId,
-      km: this.km
+      km: this.km || 0
     });
   }
 

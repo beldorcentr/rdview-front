@@ -18,6 +18,7 @@
       [typeaheadMinLength]="3"
       typeaheadOptionField="name"
       placeholder="Название дороги"
+      title="Название дороги"
       class="form-control">
 
     <div class="typeahead-status" *ngIf="typeaheadLoading || typeaheadNoResults">
@@ -31,7 +32,7 @@
     [ngClass]="{ 'active': asyncSelectedRoad != null }">
   </i>
   <div class="road-km-container">
-    <input type="number" class="form-control km" placeholder="км" [(ngModel)]="km" step=".001">
+    <input type="number" class="form-control km" placeholder="км" title="Километр" [(ngModel)]="km" step=".001">
   </div>
 </div>
 
@@ -41,7 +42,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text">N</span>
       </div>
-      <input type="number" class="form-control" step="any" [(ngModel)]="lat">
+      <input type="number" class="form-control" step="any" [(ngModel)]="lat" title="Широта">
     </div>
   </div>
   <div class="coord">
@@ -49,7 +50,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text">E</span>
         </div>
-      <input type="number" class="form-control" step="any" [(ngModel)]="lon">
+      <input type="number" class="form-control" step="any" [(ngModel)]="lon" title="Долгота">
     </div>
   </div>
   <div class="search-buttons">
@@ -57,14 +58,14 @@
         [disabled]="(!lat && lat !== 0) || (!lon && lon !== 0)"
         class="btn btn-primary"
         (click)="initByCoords(lat, lon)"
-        title="search by coordinates">
+        title="Поиск по координатам">
       <i class="fa fa-fw fa-lg fa-globe"></i>
     </button>
     <button type="button"
-        [disabled]="!roadId || (!km && km !== 0)"
+        [disabled]="!roadId"
         class="btn btn-primary"
         (click)="initByRoad()"
-        title="search by road">
+        title="Поиск по дороге">
       <i class="fa fa-fw fa-lg fa-road"></i>
     </button>
   </div>
