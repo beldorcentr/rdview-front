@@ -72,4 +72,8 @@ export class PositionInitializerComponent implements OnChanges {
       km: this.km
     });
   }
+
+  clearRoad() {
+    this.asyncSelectedRoad = null;
+  }
 }

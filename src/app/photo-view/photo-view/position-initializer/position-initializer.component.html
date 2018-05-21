@@ -22,9 +22,14 @@
 
     <div class="typeahead-status" *ngIf="typeaheadLoading || typeaheadNoResults">
       <div *ngIf="typeaheadLoading">Загрузка</div>
-      <div *ngIf="typeaheadNoResults">&#10060; Ничего не найдено</div>
+      <div *ngIf="typeaheadNoResults && !typeaheadLoading">&#10060; Ничего не найдено</div>
     </div>
   </div>
+  <i class="clear-road fa fa-fw fa-lg fa-close"
+    (click)="clearRoad()"
+    title="Очистить дорогу"
+    [ngClass]="{ 'active': asyncSelectedRoad != null }">
+  </i>
   <div class="road-km-container">
     <input type="number" class="form-control km" placeholder="км" [(ngModel)]="km" step=".001">
   </div>

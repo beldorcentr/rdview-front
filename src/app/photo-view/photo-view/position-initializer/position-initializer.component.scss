@@ -3,13 +3,25 @@
 }
 
 .road-search-container {
-  width: calc(100% - 7em);
+  width: calc(100% - 8em);
   float: left;
   position: relative;
 }
 
+.clear-road {
+  vertical-align: middle;
+  line-height: 1.7em;
+  cursor: not-allowed;
+  color: grey;
+}
+
+.clear-road.active {
+  cursor: pointer;
+  color: black;
+}
+
 .road-km-container {
-  width: 6.5em;
+  width: 6em;
   float: right;
 }
 
