@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { HttpClientModule } from '@angular/common/http';
@@ -23,6 +23,10 @@ import { CoreModule } from './core/core.module';
 export function loadConfig(oidcConfigService: OidcConfigService) {
   return () => oidcConfigService.load_using_stsServer(environment.authorizationEndpoint);
 }
+
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+registerLocaleData(localeRu, 'ru');
 
 @NgModule({
   declarations: [
@@ -48,6 +52,10 @@ export function loadConfig(oidcConfigService: OidcConfigService) {
       deps: [OidcConfigService],
       multi: true
     },
+    {
+      provide: LOCALE_ID,
+      useValue: 'ru'
+    }
   ],
   bootstrap: [AppComponent]
 })
