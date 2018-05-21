@@ -24,20 +24,20 @@
         {{ passage.date | date }}
       </span>
     </div>
-    <div class="kmmark" *ngFor="let kmmark of kmMarks"
-      [style.left.%]="getPercentWidthDistanceForKm(kmmark - beginKm)">
-    </div>
-    <div class="current-position" [style.left.%]="getPercentWidthDistanceForKm(currentKm - beginKm)">
-  
-    </div>
-  
-    <div class="position-tooltip" *ngIf="tooltipPassage"
-        [style.left.px]="tooltipX" [style.top.px]="tooltipY">
-      {{ tooltipPassage.date | date }}
-      {{ tooltipPassage.beginKm | number:'1.0-1' }} -
-      {{ tooltipPassage.endKm | number:'1.0-1' }}
-      {{ tooltipPassage.direction === 'forward' ? 'прямое' : 'обратное' }}
-      {{ tooltipKm | number:'1.0-1' }}
-    </div>
+  </div>
+
+  <div class="kmmark" *ngFor="let kmmark of kmMarks"
+    [style.left.%]="getPercentWidthDistanceForKm(kmmark - beginKm)">
+  </div>
+  <div class="current-position" [style.left.%]="getPercentWidthDistanceForKm(currentKm - beginKm)">
+  </div>
+
+  <div class="position-tooltip" *ngIf="tooltipPassage"
+      [style.left.px]="tooltipX" [style.top.px]="tooltipY">
+    {{ tooltipPassage.date | date }}
+    {{ tooltipPassage.beginKm | number:'1.0-1' }} -
+    {{ tooltipPassage.endKm | number:'1.0-1' }}
+    {{ tooltipPassage.direction === 'forward' ? 'прямое' : 'обратное' }}
+    {{ tooltipKm | number:'1.0-1' }}
   </div>
 </div>

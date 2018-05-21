@@ -10,8 +10,7 @@
         [lat]="lat"
         [lon]="lon"
         [azimuth]="azimuth"
-        (selectPosition)="initByCoordinates($event)"
-        >
+        (selectPosition)="initByCoordinates($event)">
       </app-map-position>
     </div>
 
@@ -23,8 +22,7 @@
       [lon]="lon"
       [isInited]="isInited"
       (selectRoad)="initByRoad($event)"
-      (selectCoordinates)="initByCoordinates($event)"
-    >
+      (selectCoordinates)="initByCoordinates($event)">
     </app-position-initializer>
 
     <app-position-movement
@@ -32,18 +30,19 @@
       (previousPhoto)="previousPhoto()"
       (nextPhoto)="nextPhoto()"
       (selectRoad)="initByRoad($event)"
-      (selectCoordinates)="initByCoordinates($event)"
-    >
+      (selectCoordinates)="initByCoordinates($event)">
     </app-position-movement>
 
-    <app-passage-selector *ngIf="isInited"
-      [passages]="passages"
-      [selectedPassage]="selectedPassage"
-      [beginKm]="position.closeToCurrentBeginKm"
-      [endKm]="position.closeToCurrentEndKm"
-      [currentKm]="position.currentPhoto.km"
-      (selectPassage)="selectPassage($event)">
-    </app-passage-selector>
+    <div class="passage-selector">
+      <app-passage-selector *ngIf="isInited"
+        [passages]="passages"
+        [selectedPassage]="selectedPassage"
+        [beginKm]="position.closeToCurrentBeginKm"
+        [endKm]="position.closeToCurrentEndKm"
+        [currentKm]="position.currentPhoto.km"
+        (selectPassage)="selectPassage($event)">
+      </app-passage-selector>
+    </div>
   </div>
 </div>
 

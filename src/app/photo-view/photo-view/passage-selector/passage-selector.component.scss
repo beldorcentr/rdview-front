@@ -7,13 +7,16 @@ $selected-passage-arrows-color: darken($selected-passage-color, 20%);
 $arrows-left-direction: 45deg;
 $arrows-right-direction: 135deg;
 
+$milestones-height: 1.5em;
+
 .passage-selector {
   overflow: hidden;
   position: relative;
+  height: 100%;
 }
 
 .milestones {
-  height: 1.5em;
+  height: $milestones-height;
 }
 
 .milestone {
@@ -26,7 +29,7 @@ $arrows-right-direction: 135deg;
 
 .passages {
   position: relative;
-  max-height: 15em;
+  max-height: calc(100% - #{$milestones-height});
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -52,22 +55,22 @@ $arrows-right-direction: 135deg;
   background-color: $selected-passage-color;
 }
 
+.kmmark,
+.current-position {
+  height: calc(100% - #{$milestones-height});
+  position: absolute;
+  top: $milestones-height;
+  pointer-events: none;
+}
+
 .kmmark {
   border-left: 1px dashed grey;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  pointer-events: none;
 }
 
 .current-position {
   width: 4px;
   margin-left: -2px;
   background-color:black;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  pointer-events: none;
 }
 
 .position-tooltip {
