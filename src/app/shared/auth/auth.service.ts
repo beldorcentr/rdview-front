@@ -15,6 +15,8 @@ export class AuthService {
   private isAuthorizedSubscription: Subscription;
   private _isAuthorized: boolean;
 
+  private userActionsUrl = 'api/v1/users/actions';
+
   get isAuthorized(): boolean {
     return this._isAuthorized;
   }
@@ -58,5 +60,14 @@ export class AuthService {
 
   getEmail(): string {
     return this.userData.email;
+  }
+
+  getUserActions(): Promise<string[]> {
+    const headers = new HttpHeaders({
+      'Authorization': this.getAuthorizationHeader()
+    });
+
+    return this.http.get<string[]>(this.userActionsUrl, { headers })
+      .toPromise();
   }
 }

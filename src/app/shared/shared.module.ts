@@ -9,6 +9,7 @@ import { ToasterModule } from 'angular2-toaster';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { MapGuardService } from './auth/map-guard.service';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { RouterModule } from '@angular/router';
   declarations: [],
   providers: [
     AuthGuardService,
+    MapGuardService,
     AuthService
   ]
 })

@@ -2,9 +2,17 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PhotoViewComponent } from './photo-view/photo-view.component';
 import { AuthGuardService } from '../shared/auth/auth-guard.service';
+import { MapGuardService } from '../shared/auth/map-guard.service';
 
 const appRoutes: Routes = [
-  { path: 'photoview', component: PhotoViewComponent, canActivate: [AuthGuardService] }
+  {
+    path: 'photoview',
+    component: PhotoViewComponent,
+    canActivate: [
+      AuthGuardService,
+      MapGuardService
+    ]
+  }
 ];
 
 @NgModule({
