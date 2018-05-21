@@ -1,5 +1,5 @@
-$passage-color: #FFFF00;
-$selected-passage-color: #FF0000;
+$passage-color: rgba(#FFFF00, .5);
+$selected-passage-color: rgba(#FF0000, .5);
 
 $passage-arrows-color: darken($passage-color, 20%);
 $selected-passage-arrows-color: darken($selected-passage-color, 20%);
