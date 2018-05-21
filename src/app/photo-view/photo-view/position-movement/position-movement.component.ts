@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-position-movement',
@@ -15,6 +15,10 @@ export class PositionMovementComponent {
   movingBackwardInterval;
   movingIntervalMs = 1000;
   movingMultiplySpeed = 1;
+
+  private keyCodeRight = 39;
+  private keyCodeLeft = 37;
+  private keyCodeStop = 32;
 
   get isMoving(): boolean {
     return this.isMovingForward || this.isMovingBackward;
@@ -100,5 +104,34 @@ export class PositionMovementComponent {
   private clearMovingForwardInterval() {
     clearInterval(this.movingForwardInterval);
     this.movingForwardInterval = null;
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  private handleKeyboardInput(event: KeyboardEvent) {
+    if (!this.isInited) {
+      return;
+    }
+
+    switch (event.keyCode) {
+      case this.keyCodeRight:
+        if (event.shiftKey) {
+          this.startMovingForward();
+        } else {
+          this.next();
+        }
+        break;
+      case this.keyCodeLeft:
+        if (event.shiftKey) {
+          this.startMovingBackward();
+        } else {
+          this.previous();
+        }
+        break;
+      case this.keyCodeStop:
+        this.stop();
+        break;
+      default:
+        break;
+    }
   }
 }
