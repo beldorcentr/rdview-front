@@ -103,7 +103,19 @@ export class PhotoViewComponent implements OnInit {
     this.roadId = position.road.id;
     this.km = position.currentPhoto.km;
 
-    this.passages = position.closeToCurrentPassages;
+    this.passages = position.closeToCurrentPassages
+      .sort((p1, p2) => {
+        // for same day forward direction should be first
+        if (p1.date.getFullYear() === p2.date.getFullYear() &&
+            p1.date.getMonth() === p2.date.getMonth() &&
+            p1.date.getDate() === p2.date.getDate()) {
+          if (p1.direction === 'forward') {
+            return -1;
+          }
+          return 1;
+        }
+        return p2.date.getTime() - p1.date.getTime();
+      });
     this.selectedPassage = position.currentPassage;
 
     this.isInited = true;

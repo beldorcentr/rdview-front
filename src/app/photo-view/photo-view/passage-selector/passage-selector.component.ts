@@ -26,7 +26,7 @@ export class PassageSelectorComponent implements OnChanges {
 
   kmMarks: number[];
 
-  private minWidthPartToDisplayPassageDate = .25;
+  private minWidthPartToDisplayPassageDate = .3;
 
   constructor() { }
 
