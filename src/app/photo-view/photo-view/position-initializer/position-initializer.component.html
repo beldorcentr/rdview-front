@@ -19,7 +19,8 @@
       typeaheadOptionField="name"
       placeholder="Название дороги"
       title="Название дороги"
-      class="form-control">
+      class="form-control"
+      (keyup.enter)="initByRoad()">
 
     <div class="typeahead-status" *ngIf="typeaheadLoading || typeaheadNoResults">
       <div *ngIf="typeaheadLoading">Загрузка</div>
@@ -32,7 +33,13 @@
     [ngClass]="{ 'active': asyncSelectedRoad != null }">
   </i>
   <div class="road-km-container">
-    <input type="number" class="form-control km" placeholder="км" title="Километр" [(ngModel)]="km" step=".001">
+    <input type="number"
+      class="form-control km"
+      placeholder="км"
+      title="Километр"
+      [(ngModel)]="km"
+      step=".001"
+      (keyup.enter)="initByRoad()">
   </div>
 </div>
 
@@ -42,7 +49,12 @@
       <div class="input-group-prepend">
         <span class="input-group-text">N</span>
       </div>
-      <input type="number" class="form-control" step="any" [(ngModel)]="lat" title="Широта">
+      <input type="number"
+        class="form-control"
+        step="any"
+        [(ngModel)]="lat"
+        title="Широта"
+        (keyup.enter)="initByCoords()">
     </div>
   </div>
   <div class="coord">
@@ -50,7 +62,12 @@
         <div class="input-group-prepend">
           <span class="input-group-text">E</span>
         </div>
-      <input type="number" class="form-control" step="any" [(ngModel)]="lon" title="Долгота">
+      <input type="number"
+        class="form-control"
+        step="any"
+        [(ngModel)]="lon"
+        title="Долгота"
+        (keyup.enter)="initByCoords()">
     </div>
   </div>
   <div class="search-buttons">

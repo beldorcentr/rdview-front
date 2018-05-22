@@ -62,8 +62,11 @@ export class PositionInitializerComponent implements OnChanges {
     this.asyncSelectedRoad = this.roadName;
   }
 
-  initByCoords(lat, lon) {
-    this.selectCoordinates.emit({ lat, lon });
+  initByCoords() {
+    this.selectCoordinates.emit({
+      lat: this.lat || 0,
+      lon: this.lon || 0
+    });
   }
 
   initByRoad() {
