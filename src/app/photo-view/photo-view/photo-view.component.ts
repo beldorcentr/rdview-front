@@ -10,6 +10,11 @@ import { environment } from '../../../environments/environment';
 import { ToasterService } from 'angular2-toaster';
 import { mouseWheelZoom, MouseWheelZoom  } from 'mouse-wheel-zoom';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { switchMap, mapTo } from 'rxjs/operators';
+import { merge } from 'rxjs/observable/merge';
+import { Subject } from 'rxjs/Subject';
+import { map } from 'rxjs/operator/map';
 
 @Component({
   selector: 'app-photo-view',
@@ -36,7 +41,18 @@ export class PhotoViewComponent implements OnInit {
   private roadService: RoadService;
   private authorizationHeader: string;
 
-  wheelZoom: MouseWheelZoom;
+  private wheelZoom: MouseWheelZoom;
+
+  private nextPhotoSubject = new Subject();
+  private previousPhotoSubject = new Subject();
+  private initPositionSubject = new Subject<CurrentPosition>();
+
+  private nextPhoto$ = this.nextPhotoSubject.asObservable();
+  private previousPhoto$ = this.previousPhotoSubject.asObservable();
+  private initPosition$ = this.initPositionSubject.asObservable();
+
+  private currentPosition$: Observable<CurrentPosition>;
+  private photoBlob$: Observable<Blob>;
 
   @ViewChild('roadphoto') photoElement: ElementRef;
 
@@ -52,6 +68,7 @@ export class PhotoViewComponent implements OnInit {
         return;
       }
       this.initUserAuthData();
+      this.initCurrentPositionStreams();
     });
   }
 
@@ -68,20 +85,49 @@ export class PhotoViewComponent implements OnInit {
     });
   }
 
+  initCurrentPositionStreams() {
+    this.currentPosition$ = merge(
+      this.initPosition$,
+      this.nextPhoto$.flatMap(() =>
+        Observable.fromPromise(this.rdviewService.getNextPhoto())
+      ),
+      this.previousPhoto$.flatMap(() =>
+        Observable.fromPromise(this.rdviewService.getPreviousPhoto())
+      )
+    );
+
+    this.currentPosition$.subscribe(
+      currentPosition => this.handleNewPosition(currentPosition),
+      err => this.showMovementError(err)
+    );
+
+    this.photoBlob$ = this.currentPosition$.pipe(
+      switchMap(p => this.http.get(p.currentPhoto.imgUrl, {
+          headers: new HttpHeaders()
+            .set('Authorization', this.authorizationHeader),
+          responseType: 'blob'
+        })
+      )
+    );
+
+    this.photoBlob$.subscribe(response => {
+      this.wheelZoom.setSrcAndReset(URL.createObjectURL(response));
+    }, err => {
+      this.showImageLoadingError(err);
+      this.photoElement.nativeElement.removeAttribute('src');
+    });
+  }
+
   ngOnInit() {
     this.wheelZoom = mouseWheelZoom({ element: this.photoElement.nativeElement });
   }
 
   nextPhoto() {
-    this.rdviewService.getNextPhoto()
-      .then(currentPosition => this.handleNewPosition(currentPosition),
-        err => this.showMovementError(err));
+    this.nextPhotoSubject.next();
   }
 
   previousPhoto() {
-    this.rdviewService.getPreviousPhoto()
-      .then(currentPosition => this.handleNewPosition(currentPosition),
-        err => this.showMovementError(err));
+    this.previousPhotoSubject.next();
   }
 
   handleNewPosition(position: CurrentPosition) {
@@ -124,37 +170,25 @@ export class PhotoViewComponent implements OnInit {
       this.toasterService.pop('info', 'Нет фото', 'Для текущего сегмента больше нет фотографий');
       return;
     }
-
-    this.http.get(this.photo.imgUrl, {
-      headers: new HttpHeaders()
-        .set('Authorization', this.authorizationHeader),
-      responseType: 'blob'
-    }).toPromise()
-      .then(response => {
-        this.wheelZoom.setSrcAndReset(URL.createObjectURL(response));
-      }, err => {
-        this.showImageLoadingError(err);
-        this.photoElement.nativeElement.removeAttribute('src');
-      });
   }
 
   selectPassage(event: { passageId: string, km: number }) {
     this.rdviewService.setPassage(event.passageId, event.km)
-      .then(currentPosition => this.handleNewPosition(currentPosition))
-      .catch(err => this.showMovementError(err));
+      .then(currentPosition => this.initPositionSubject.next(currentPosition),
+        err => this.showMovementError(err));
   }
 
   initByCoordinates({ lat, lon }: { lat: number, lon: number}) {
     this.isLoading = true;
     this.rdviewService.initByCoordinates(lat, lon)
-      .then(currentPosition => this.handleNewPosition(currentPosition),
+      .then(currentPosition => this.initPositionSubject.next(currentPosition),
         err => this.showInitError(err));
   }
 
   initByRoad({ roadId, km }: { roadId: number, km: number }) {
     this.isLoading = true;
     this.rdviewService.initByRoad(roadId, km)
-      .then(currentPosition => this.handleNewPosition(currentPosition),
+      .then(currentPosition => this.initPositionSubject.next(currentPosition),
         err => this.showInitError(err));
   }
 
