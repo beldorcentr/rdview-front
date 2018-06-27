@@ -6,17 +6,22 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AuthService {
 
-  private userData: any;
-  private _isAuthorized: boolean;
+  isAuthorized: boolean;
 
+  private userData: any;
   private userActionsUrl = 'api/v1/users/actions';
 
-  get isAuthorized(): boolean {
-    return this._isAuthorized;
-  }
 
   constructor(private http: HttpClient,
-      private oidcSecurityService: OidcSecurityService) { }
+      private oidcSecurityService: OidcSecurityService) {
+    this.oidcSecurityService
+      .getIsAuthorized()
+      .subscribe(isAuthorized => this.isAuthorized = isAuthorized);
+
+    this.oidcSecurityService
+      .getUserData()
+      .subscribe(userData => this.userData = userData);
+  }
 
   getIsAuthorized(): Observable<boolean> {
     return this.oidcSecurityService.getIsAuthorized();
