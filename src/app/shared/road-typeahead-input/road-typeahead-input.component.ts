@@ -1,27 +1,22 @@
 import { Component, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { RoadService, Road } from 'rdview-service';
-import { AuthService } from '../../../../app/shared/auth/auth.service';
-import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../app/shared/auth/auth.service';
+import { environment } from '../../../environments/environment';
 import { TypeaheadMatch } from 'ngx-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/fromPromise';
 
 @Component({
-  selector: 'app-position-initializer',
-  templateUrl: './position-initializer.component.html',
-  styleUrls: ['./position-initializer.component.scss']
+  selector: 'app-road-typeahead-input',
+  templateUrl: './road-typeahead-input.component.html',
+  styleUrls: ['./road-typeahead-input.component.scss']
 })
-export class PositionInitializerComponent implements OnChanges {
+export class RoadTypeaheadInputComponent implements OnChanges {
 
   @Input() roadName: string;
-  @Input() roadId: number;
-  @Input() km: number;
-  @Input() lat: number;
-  @Input() lon: number;
-  @Input() isInited: boolean;
-  @Output() selectRoad = new EventEmitter<{ roadId: number, km: number }>();
-  @Output() selectCoordinates = new EventEmitter<{ lat: number, lon: number }>();
+  @Output() selectRoad = new EventEmitter<Road>();
+  @Output() enterKeyup = new EventEmitter();
 
   isDisplayAutocompletePopup = false;
   isAutocompleteLoading = false;
@@ -32,6 +27,7 @@ export class PositionInitializerComponent implements OnChanges {
   roadDataSource: Observable<Road[]>;
 
   private roadService: RoadService;
+  private selectedRoad: Road;
 
   changeTypeaheadLoading(e: boolean): void {
     this.typeaheadLoading = e;
@@ -42,8 +38,9 @@ export class PositionInitializerComponent implements OnChanges {
   }
 
   typeaheadOnSelect(e: TypeaheadMatch): void {
+    this.selectedRoad = e.item;
     this.asyncSelectedRoad = e.item.name;
-    this.roadId = e.item.id;
+    this.selectRoad.emit(this.selectedRoad);
   }
 
   constructor(private authService: AuthService) {
@@ -62,25 +59,7 @@ export class PositionInitializerComponent implements OnChanges {
     this.asyncSelectedRoad = this.roadName;
   }
 
-  initByCoords() {
-    this.selectCoordinates.emit({
-      lat: this.lat || 0,
-      lon: this.lon || 0
-    });
-  }
-
-  initByRoad() {
-    this.selectRoad.emit({
-      roadId: this.roadId,
-      km: this.km || 0
-    });
-  }
-
-  clearRoad() {
-    this.asyncSelectedRoad = null;
-  }
-
-  selectCurrentRoad(road: Road) {
-    this.roadId = road.id;
+  enterUp() {
+    this.enterKeyup.emit();
   }
 }

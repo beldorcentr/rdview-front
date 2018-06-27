@@ -1,31 +1,9 @@
 <div class="row-container clearfix">
   <div class="road-search-container">
-    <ng-template #customItemTemplate let-model="item" let-index="index">
-      <div class="road-search-template">
-        {{ model.name }}
-      </div>
-    </ng-template>
-
-    <input [(ngModel)]="asyncSelectedRoad"
-      [typeahead]="roadDataSource"
-      (typeaheadLoading)="changeTypeaheadLoading($event)"
-      (typeaheadNoResults)="changeTypeaheadNoResults($event)"
-      (typeaheadOnSelect)="typeaheadOnSelect($event)"
-      [typeaheadScrollable]="true"
-      [typeaheadOptionsInScrollableView]="4"
-      [typeaheadItemTemplate]="customItemTemplate"
-      [typeaheadWaitMs]="300"
-      [typeaheadMinLength]="3"
-      typeaheadOptionField="name"
-      placeholder="Название дороги"
-      title="Название дороги"
-      class="form-control"
-      (keyup.enter)="initByRoad()">
-
-    <div class="typeahead-status" *ngIf="typeaheadLoading || typeaheadNoResults">
-      <div *ngIf="typeaheadLoading">Загрузка</div>
-      <div *ngIf="typeaheadNoResults && !typeaheadLoading">&#10060; Ничего не найдено</div>
-    </div>
+    <app-road-typeahead-input
+      (selectRoad)="selectCurrentRoad($event)"
+      (enterKeyup)="initByRoad()">
+    </app-road-typeahead-input>
   </div>
   <i class="clear-road fa fa-fw fa-lg fa-close"
     (click)="clearRoad()"

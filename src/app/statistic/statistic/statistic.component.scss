@@ -1,0 +1,31 @@
+$stats-width: 35em;
+
+.table-header {
+  background-color: #5bc0de;
+}
+
+.year-statistic {
+  width: 30em;
+  margin: auto;
+}
+
+.stats {
+  width: #{$stats-width};
+  float: left;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.map {
+  width: calc(100% - #{$stats-width});
+  float: right;
+  height: 100%;
+}
+
+.network-statistic {
+  text-align: center;
+}
+
+.container {
+  padding: .5em;
+}

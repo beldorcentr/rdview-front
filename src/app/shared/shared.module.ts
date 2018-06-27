@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MapGuardService } from './auth/map-guard.service';
+import { RoadTypeaheadInputComponent } from './road-typeahead-input/road-typeahead-input.component';
+import { TypeaheadModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
@@ -18,13 +20,19 @@ import { MapGuardService } from './auth/map-guard.service';
     ToasterModule,
     BrowserAnimationsModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    TypeaheadModule.forRoot()
   ],
-  declarations: [],
+  declarations: [
+    RoadTypeaheadInputComponent
+  ],
   providers: [
     AuthGuardService,
     MapGuardService,
     AuthService
+  ],
+  exports: [
+    RoadTypeaheadInputComponent
   ]
 })
 export class SharedModule { }
