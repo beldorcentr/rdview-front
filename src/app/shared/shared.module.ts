@@ -12,6 +12,8 @@ import { RouterModule } from '@angular/router';
 import { MapGuardService } from './auth/map-guard.service';
 import { RoadTypeaheadInputComponent } from './road-typeahead-input/road-typeahead-input.component';
 import { TypeaheadModule } from 'ngx-bootstrap';
+import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
+import { LoadingIndicatorService } from './loading-indicator/loading-indicator.service';
 
 @NgModule({
   imports: [
@@ -24,15 +26,18 @@ import { TypeaheadModule } from 'ngx-bootstrap';
     TypeaheadModule.forRoot()
   ],
   declarations: [
-    RoadTypeaheadInputComponent
+    RoadTypeaheadInputComponent,
+    LoadingIndicatorComponent
   ],
   providers: [
     AuthGuardService,
     MapGuardService,
-    AuthService
+    AuthService,
+    LoadingIndicatorService
   ],
   exports: [
-    RoadTypeaheadInputComponent
+    RoadTypeaheadInputComponent,
+    LoadingIndicatorComponent
   ]
 })
 export class SharedModule { }

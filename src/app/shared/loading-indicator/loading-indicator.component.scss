@@ -1,0 +1,11 @@
+.loading-indicator {
+  position: fixed;
+  width: 4em;
+  height: 4em;
+  top: 50%;
+  left: 50%;
+  margin-left: -2em;
+  margin-top: -2em;
+  z-index: 10000;
+  color: #007bff;
+}

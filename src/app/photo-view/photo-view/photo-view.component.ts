@@ -15,6 +15,7 @@ import { switchMap, mapTo } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { Subject } from 'rxjs/Subject';
 import { map } from 'rxjs/operator/map';
+import { LoadingIndicatorService } from '../../shared/loading-indicator/loading-indicator.service';
 
 @Component({
   selector: 'app-photo-view',
@@ -59,7 +60,8 @@ export class PhotoViewComponent implements OnInit {
   constructor(private authService: AuthService,
       private http: HttpClient,
       private router: Router,
-      private toasterService: ToasterService) {
+      private toasterService: ToasterService,
+      private loadingIndicatorService: LoadingIndicatorService) {
 
     this.initUserAuthData();
 
@@ -131,7 +133,7 @@ export class PhotoViewComponent implements OnInit {
   }
 
   handleNewPosition(position: CurrentPosition) {
-    this.isLoading = false;
+    this.loadingIndicatorService.isLoading = false;
 
     if (!position || position.isEmptyResult) {
       this.toasterService.pop('info', 'Пустой ответ сервера');
@@ -179,14 +181,14 @@ export class PhotoViewComponent implements OnInit {
   }
 
   initByCoordinates({ lat, lon }: { lat: number, lon: number}) {
-    this.isLoading = true;
+    this.loadingIndicatorService.isLoading = true;
     this.rdviewService.initByCoordinates(lat, lon)
       .then(currentPosition => this.initPositionSubject.next(currentPosition),
         err => this.showInitError(err));
   }
 
   initByRoad({ roadId, km }: { roadId: number, km: number }) {
-    this.isLoading = true;
+    this.loadingIndicatorService.isLoading = true;
     this.rdviewService.initByRoad(roadId, km)
       .then(currentPosition => this.initPositionSubject.next(currentPosition),
         err => this.showInitError(err));
@@ -194,7 +196,7 @@ export class PhotoViewComponent implements OnInit {
 
   showInitError(err) {
     this.handleAuthLoadingError(err);
-    this.isLoading = false;
+    this.loadingIndicatorService.isLoading = false;
     this.toasterService.pop('error', 'Ошибка связи с сервером');
   }
 

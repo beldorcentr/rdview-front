@@ -5,6 +5,8 @@ import { RoadStatisticByYear } from '../road-statistic-by-year';
 import { RoadStatistic } from '../road-statistic';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Road } from 'rdview-service';
+import { LoadingIndicatorService } from '../../shared/loading-indicator/loading-indicator.service';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-statistic',
@@ -22,7 +24,9 @@ export class StatisticComponent implements OnInit {
   modalRef: BsModalRef;
 
   constructor(private statisticService: StatisticService,
-    private modalService: BsModalService) { }
+    private modalService: BsModalService,
+    private toasterService: ToasterService,
+    private loadingIndicatorService: LoadingIndicatorService) { }
 
   ngOnInit() {
     this.statisticService.getNetworkStatisticByYear()
@@ -40,10 +44,15 @@ export class StatisticComponent implements OnInit {
   }
 
   selectRoad(road: Road) {
+    this.loadingIndicatorService.isLoading = true;
     this.statisticService.getRoadStatisticByYear(road.id)
       .then(roadStatisticByYear => {
+        this.loadingIndicatorService.isLoading = false;
         this.roadStatisticByYear = roadStatisticByYear;
         this.roadStatistic = roadStatisticByYear.roadStatistic;
+      }, err => {
+        this.loadingIndicatorService.isLoading = false;
+        this.toasterService.pop('error', 'Ошибка загрузки данных по дороге');
       });
   }
 
