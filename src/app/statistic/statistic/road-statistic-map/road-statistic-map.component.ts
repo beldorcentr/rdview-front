@@ -24,8 +24,6 @@ export class RoadStatisticMapComponent implements OnInit, OnChanges {
   @Input() selectedRoadStatistic: RoadStatistic;
   @Output() selectRoadStatistic = new EventEmitter<RoadStatistic>();
 
-  constructor() { }
-
   ngOnInit() {
     this.initializeMap();
   }

@@ -46,14 +46,19 @@ export class StatisticComponent implements OnInit {
   selectRoad(road: Road) {
     this.loadingIndicatorService.isLoading = true;
     this.statisticService.getRoadStatisticByYear(road.id)
-      .then(roadStatisticByYear => {
-        this.loadingIndicatorService.isLoading = false;
-        this.roadStatisticByYear = roadStatisticByYear;
-        this.roadStatistic = roadStatisticByYear.roadStatistic;
-      }, err => {
-        this.loadingIndicatorService.isLoading = false;
-        this.toasterService.pop('error', 'Ошибка загрузки данных по дороге');
-      });
+      .then(roadStatisticByYear => this.initRoadStatisticByYear(roadStatisticByYear),
+        err => this.handleRoadStatisticLoadingError(err));
+  }
+
+  private initRoadStatisticByYear(roadStatisticByYear: RoadStatisticByYear) {
+    this.loadingIndicatorService.isLoading = false;
+    this.roadStatisticByYear = roadStatisticByYear;
+    this.roadStatistic = roadStatisticByYear.roadStatistic;
+  }
+
+  private handleRoadStatisticLoadingError(err) {
+    this.loadingIndicatorService.isLoading = false;
+    this.toasterService.pop('error', 'Ошибка загрузки данных по дороге');
   }
 
 }
