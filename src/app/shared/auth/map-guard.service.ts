@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { AuthService } from './auth.service';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class MapGuardService implements CanActivate {

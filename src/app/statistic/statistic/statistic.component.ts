@@ -1,11 +1,11 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { StatisticService } from '../statistic.service';
-import { NetworkStatisticByYear } from '../network-statistic-by-year';
-import { RoadStatisticByYear } from '../road-statistic-by-year';
-import { RoadStatistic } from '../road-statistic';
+import { StatisticService } from 'app/statistic/statistic.service';
+import { NetworkStatisticByYear } from 'app/statistic/network-statistic-by-year';
+import { RoadStatisticByYear } from 'app/statistic/road-statistic-by-year';
+import { RoadStatistic } from 'app/statistic/road-statistic';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Road } from 'rdview-service';
-import { LoadingIndicatorService } from '../../shared/loading-indicator/loading-indicator.service';
+import { LoadingIndicatorService } from 'app/shared/loading-indicator/loading-indicator.service';
 import { ToasterService } from 'angular2-toaster';
 
 @Component({

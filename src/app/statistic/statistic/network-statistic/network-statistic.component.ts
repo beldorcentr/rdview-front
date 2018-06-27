@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { NetworkStatisticByYear } from '../../network-statistic-by-year';
+import { NetworkStatisticByYear } from 'app/statistic/network-statistic-by-year';
 
 @Component({
   selector: 'app-network-statistic',

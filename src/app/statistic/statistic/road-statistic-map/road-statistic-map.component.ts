@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
 
 import * as L from 'leaflet';
 import 'leaflet-rotatedmarker';
-import { RoadStatistic } from '../../road-statistic';
+import { RoadStatistic } from 'app/statistic/road-statistic';
 
 const MAP_DEFAULT_ZOOM = 6;
 const MAP_DEFAULT_CENTER = L.latLng(53.5, 28);

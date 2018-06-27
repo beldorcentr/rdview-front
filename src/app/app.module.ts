@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { ToasterModule } from 'angular2-toaster';
 import { HttpClientModule } from '@angular/common/http';
-import { environment } from '../environments/environment';
+import { environment } from 'environments/environment';
 import {
   AuthModule,
   OidcSecurityService,

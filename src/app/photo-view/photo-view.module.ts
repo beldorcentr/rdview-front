@@ -8,7 +8,7 @@ import { PositionInitializerComponent } from './photo-view/position-initializer/
 import { PositionMovementComponent } from './photo-view/position-movement/position-movement.component';
 import { FormsModule } from '@angular/forms';
 import { TypeaheadModule } from 'ngx-bootstrap';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
   imports: [

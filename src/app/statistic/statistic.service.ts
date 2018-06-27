@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from '../shared/auth/auth.service';
+import { AuthService } from 'app/shared/auth/auth.service';
 import { NetworkStatistic } from './network-statistic';
 import { RoadType } from './road-type';
 import { NetworkStatisticByYear } from './network-statistic-by-year';

@@ -1,18 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import * as jwtDecode from 'jwt-decode';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService {
 
-  private userDataSubscription: Subscription;
   private userData: any;
-
-  private isAuthorizedSubscription: Subscription;
   private _isAuthorized: boolean;
 
   private userActionsUrl = 'api/v1/users/actions';
@@ -22,17 +16,7 @@ export class AuthService {
   }
 
   constructor(private http: HttpClient,
-      private oidcSecurityService: OidcSecurityService) {
-    this.isAuthorizedSubscription = this.oidcSecurityService
-      .getIsAuthorized().subscribe((isAuthorized: boolean) => {
-        this._isAuthorized = isAuthorized;
-      });
-
-    this.userDataSubscription = this.oidcSecurityService
-      .getUserData().subscribe((userData: any) => {
-        this.userData = userData;
-      });
-  }
+      private oidcSecurityService: OidcSecurityService) { }
 
   getIsAuthorized(): Observable<boolean> {
     return this.oidcSecurityService.getIsAuthorized();

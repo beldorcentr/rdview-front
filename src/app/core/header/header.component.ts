@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../shared/auth/auth.service';
+import { Component } from '@angular/core';
+import { AuthService } from 'app/shared/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
   get name() {
     return this.authService.getName();
@@ -19,9 +19,6 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authService: AuthService,
     private router: Router) { }
-
-  ngOnInit() {
-  }
 
   logout() {
     this.authService.logout();

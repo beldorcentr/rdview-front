@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 
 @Component({
@@ -6,12 +6,9 @@ import { Location } from '@angular/common';
   templateUrl: './forbidden.component.html',
   styleUrls: ['./forbidden.component.scss']
 })
-export class ForbiddenComponent implements OnInit {
+export class ForbiddenComponent {
 
   constructor(private location: Location) { }
-
-  ngOnInit() {
-  }
 
   back() {
     this.location.back();

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { RoadStatisticByYear } from '../../road-statistic-by-year';
-import { RoadStatistic } from '../../road-statistic';
+import { RoadStatisticByYear } from 'app/statistic/road-statistic-by-year';
+import { RoadStatistic } from 'app/statistic/road-statistic';
 
 @Component({
   selector: 'app-road-statistic',
