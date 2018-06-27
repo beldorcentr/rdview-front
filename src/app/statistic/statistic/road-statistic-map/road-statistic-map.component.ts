@@ -3,12 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
 import * as L from 'leaflet';
 import 'leaflet-rotatedmarker';
 import { RoadStatistic } from 'app/statistic/road-statistic';
-
-const MAP_DEFAULT_ZOOM = 6;
-const MAP_DEFAULT_CENTER = L.latLng(53.5, 28);
-const MAP_BOUNDS = L.latLngBounds(L.latLng(40, 10), L.latLng(70, 50));
-const MAP_TILE_LAYER_URL_TEMPLATE = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-const MAP_TILE_LAYER_ATTRIBUTION = '&copy;&nbsp;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors,&nbsp;';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-road-statistic-map',
@@ -50,11 +45,11 @@ export class RoadStatisticMapComponent implements OnInit, OnChanges {
 
   private initializeMap() {
     this.map = L.map('statistic-map')
-      .setView(MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM)
-      .setMaxBounds(MAP_BOUNDS);
+      .setView(environment.mapDefaultCenter, environment.mapDefaultZoom)
+      .setMaxBounds(environment.mapBounds);
 
-    L.tileLayer(MAP_TILE_LAYER_URL_TEMPLATE, {
-      attribution: MAP_TILE_LAYER_ATTRIBUTION
+    L.tileLayer(environment.mapTitleLayerUrlTemplate, {
+      attribution: environment.mapTitleLayerAttribution
     }).addTo(this.map);
   }
 
