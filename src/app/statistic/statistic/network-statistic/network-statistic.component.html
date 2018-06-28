@@ -1,0 +1,25 @@
+<div *ngIf="networkStatisticByYear" class="network-statistic">
+  <h4>Всего фотографий: {{ networkStatisticByYear.totalPhotos }}</h4>
+  <h4>Всего км: {{ networkStatisticByYear.totalKm | number }}</h4>
+  <div class="year-statistic" *ngFor="let yearStat of networkStatisticByYear.statisticByYear">
+    <h4>{{ yearStat.year }} год</h4>
+    <h5>{{ yearStat.totalKm | number }} км {{ yearStat.totalPhotos }} Фотографий</h5>
+    <table class="table table-hover table-sm">
+      <thead>
+        <tr class="table-header" scope="col">
+          <th>Тип дорог</th>
+          <th>Длина, км</th>
+          <th>Фотографий</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr scope="row" *ngFor="let s of yearStat.networkStatistic">
+          <!-- TODO: pipe for enum -->
+          <td>{{ s.roadType | roadType }}</td>
+          <td>{{ s.kmLength | number}}</td>
+          <td>{{ s.photosCount }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

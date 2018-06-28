@@ -1,19 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../shared/auth/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http/src/response';
+import { Component } from '@angular/core';
+import { AuthService } from 'app/shared/auth/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   constructor(private authServer: AuthService) { }
-
-  ngOnInit() {
-  }
 
   login() {
     this.authServer.login();

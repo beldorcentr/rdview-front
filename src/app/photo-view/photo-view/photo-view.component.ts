@@ -1,20 +1,16 @@
 import { Component, ElementRef, ViewChild, OnInit} from '@angular/core';
-import {
-  RdviewService, CurrentPosition,
-  Road, Segment, Passage, Photo, RoadService
-} from 'rdview-service';
-import { AuthService } from '../../shared/auth/auth.service';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { ResponseContentType } from '@angular/http';
-import { environment } from '../../../environments/environment';
+import { RdviewService, CurrentPosition, Passage, Photo } from 'rdview-service';
+import { AuthService } from 'app/shared/auth/auth.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'environments/environment';
 import { ToasterService } from 'angular2-toaster';
 import { mouseWheelZoom, MouseWheelZoom  } from 'mouse-wheel-zoom';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { switchMap, mapTo } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { Subject } from 'rxjs/Subject';
-import { map } from 'rxjs/operator/map';
+import { LoadingIndicatorService } from 'app/shared/loading-indicator/loading-indicator.service';
 
 @Component({
   selector: 'app-photo-view',
@@ -38,7 +34,6 @@ export class PhotoViewComponent implements OnInit {
   isLoading = false;
 
   private rdviewService: RdviewService;
-  private roadService: RoadService;
   private authorizationHeader: string;
 
   private wheelZoom: MouseWheelZoom;
@@ -59,7 +54,8 @@ export class PhotoViewComponent implements OnInit {
   constructor(private authService: AuthService,
       private http: HttpClient,
       private router: Router,
-      private toasterService: ToasterService) {
+      private toasterService: ToasterService,
+      private loadingIndicatorService: LoadingIndicatorService) {
 
     this.initUserAuthData();
 
@@ -74,10 +70,6 @@ export class PhotoViewComponent implements OnInit {
 
   initUserAuthData() {
     this.authorizationHeader = this.authService.getAuthorizationHeader();
-
-    this.roadService = new RoadService({
-      authorization: this.authorizationHeader
-    });
 
     this.rdviewService = new RdviewService({
       apiUrl: environment.apiUrl,
@@ -131,7 +123,7 @@ export class PhotoViewComponent implements OnInit {
   }
 
   handleNewPosition(position: CurrentPosition) {
-    this.isLoading = false;
+    this.loadingIndicatorService.isLoading = false;
 
     if (!position || position.isEmptyResult) {
       this.toasterService.pop('info', 'Пустой ответ сервера');
@@ -179,14 +171,14 @@ export class PhotoViewComponent implements OnInit {
   }
 
   initByCoordinates({ lat, lon }: { lat: number, lon: number}) {
-    this.isLoading = true;
+    this.loadingIndicatorService.isLoading = true;
     this.rdviewService.initByCoordinates(lat, lon)
       .then(currentPosition => this.initPositionSubject.next(currentPosition),
         err => this.showInitError(err));
   }
 
   initByRoad({ roadId, km }: { roadId: number, km: number }) {
-    this.isLoading = true;
+    this.loadingIndicatorService.isLoading = true;
     this.rdviewService.initByRoad(roadId, km)
       .then(currentPosition => this.initPositionSubject.next(currentPosition),
         err => this.showInitError(err));
@@ -194,7 +186,7 @@ export class PhotoViewComponent implements OnInit {
 
   showInitError(err) {
     this.handleAuthLoadingError(err);
-    this.isLoading = false;
+    this.loadingIndicatorService.isLoading = false;
     this.toasterService.pop('error', 'Ошибка связи с сервером');
   }
 

@@ -1,0 +1,53 @@
+<div class="stats">
+  <div class="container">
+    <button type="button"
+        class="btn btn-primary"
+        (click)="openModal(template)">
+      Статистика всей сети
+    </button>
+
+    <ng-template #template>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Статистика дорожной сети</h4>
+        <button type="button" class="close pull-right"
+            aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-network-statistic
+          [networkStatisticByYear]="networkStatisticByYear">
+        </app-network-statistic>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="container">
+    <app-road-typeahead-input
+      (enterKeyup)="selectRoad($event)"
+      (selectRoad)="selectRoad($event)">
+    </app-road-typeahead-input>
+  
+    <app-road-statistic
+      [roadStatisticByYear]="roadStatisticByYear"
+      [selectedRoadStatistic]="selectedRoadStatistic"
+      (selectRoadStatistic)="selectRoadStatistic($event)">
+    </app-road-statistic>
+  </div>
+</div>
+<div class="map">
+  <app-road-statistic-map
+    [roadStatistic]="roadStatistic"
+    [selectedRoadStatistic]="selectedRoadStatistic"
+    (selectRoadStatistic)="selectRoadStatistic($event)">
+  </app-road-statistic-map>
+</div>
+
+
+
+
+
+
+
+
+

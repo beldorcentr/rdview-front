@@ -10,6 +10,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MapGuardService } from './auth/map-guard.service';
+import { RoadTypeaheadInputComponent } from './road-typeahead-input/road-typeahead-input.component';
+import { TypeaheadModule } from 'ngx-bootstrap';
+import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
+import { LoadingIndicatorService } from './loading-indicator/loading-indicator.service';
 
 @NgModule({
   imports: [
@@ -18,13 +22,22 @@ import { MapGuardService } from './auth/map-guard.service';
     ToasterModule,
     BrowserAnimationsModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    TypeaheadModule.forRoot()
   ],
-  declarations: [],
+  declarations: [
+    RoadTypeaheadInputComponent,
+    LoadingIndicatorComponent
+  ],
   providers: [
     AuthGuardService,
     MapGuardService,
-    AuthService
+    AuthService,
+    LoadingIndicatorService
+  ],
+  exports: [
+    RoadTypeaheadInputComponent,
+    LoadingIndicatorComponent
   ]
 })
 export class SharedModule { }

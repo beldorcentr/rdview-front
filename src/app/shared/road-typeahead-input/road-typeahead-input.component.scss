@@ -1,0 +1,19 @@
+.road-search-container {
+  position: relative;
+}
+
+.typeahead-status {
+  position: absolute;
+  top: 2.5em;
+  z-index: 5;
+  background-color: white;
+  padding: .5em;
+  width: 100%;
+  text-align: center;
+}
+
+.road-search-template {
+  width: 100%;
+  word-wrap: break-word;
+  white-space: normal;
+}

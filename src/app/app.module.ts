@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { ToasterModule } from 'angular2-toaster';
 import { HttpClientModule } from '@angular/common/http';
-import { environment } from '../environments/environment';
+import { environment } from 'environments/environment';
 import {
   AuthModule,
   OidcSecurityService,
@@ -11,6 +11,7 @@ import {
   OidcConfigService,
   AuthWellKnownEndpoints
 } from 'angular-auth-oidc-client';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppComponent } from './app.component';
 
@@ -26,6 +27,7 @@ export function loadConfig(oidcConfigService: OidcConfigService) {
 
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
+import { StatisticModule } from './statistic/statistic.module';
 registerLocaleData(localeRu, 'ru');
 
 @NgModule({
@@ -38,11 +40,13 @@ registerLocaleData(localeRu, 'ru');
     RouterModule,
     LoginModule,
     PhotoViewModule,
+    StatisticModule,
     SharedModule,
     AppRoutingModule,
     ToasterModule.forRoot(),
     HttpClientModule,
-    AuthModule.forRoot()
+    AuthModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [
     OidcConfigService,

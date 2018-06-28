@@ -1,7 +1,7 @@
 import { Component, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { RoadService, Road } from 'rdview-service';
-import { AuthService } from '../../../shared/auth/auth.service';
-import { environment } from '../../../../environments/environment';
+import { AuthService } from 'app/shared/auth/auth.service';
+import { environment } from 'environments/environment';
 import { TypeaheadMatch } from 'ngx-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -78,5 +78,9 @@ export class PositionInitializerComponent implements OnChanges {
 
   clearRoad() {
     this.asyncSelectedRoad = null;
+  }
+
+  selectCurrentRoad(road: Road) {
+    this.roadId = road.id;
   }
 }
