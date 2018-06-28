@@ -1,8 +1,9 @@
-$header-height: 2em;
-$header-color: #5bc0de;
-$header-link-hover-color: #5ba0ee;
-$header-link-active-color: #5b90fe;
-$header-text-color: white;
+@import '~app/shared/styles/main.scss';
+
+$header-color: rdview-color('primary');
+$header-text-color: rdview-color('background');
+$header-link-hover-color: shade(rdview-color('accent'), 20%);
+$header-link-active-color: shade($header-link-hover-color, 10%);
 
 .header {
   height: $header-height;

@@ -1,3 +1,7 @@
+@import '~app/shared/styles/main.scss';
+
+$typehead-status-color: rdview-color('background');
+
 .road-search-container {
   position: relative;
 }
@@ -6,7 +10,7 @@
   position: absolute;
   top: 2.5em;
   z-index: 5;
-  background-color: white;
+  background-color: $typehead-status-color;
   padding: .5em;
   width: 100%;
   text-align: center;

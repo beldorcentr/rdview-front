@@ -1,7 +1,9 @@
-$stats-width: 35em;
+@import '~app/shared/styles/main.scss';
+
+$table-header-color: rdview-color('primary');
 
 .table-header {
-  background-color: #5bc0de;
+  background-color: $table-header-color;
 }
 
 .year-statistic {
@@ -10,14 +12,14 @@ $stats-width: 35em;
 }
 
 .stats {
-  width: #{$stats-width};
+  width: $statistic-width;
   float: left;
   height: 100%;
   overflow-y: auto;
 }
 
 .map {
-  width: calc(100% - #{$stats-width});
+  width: calc(100% - #{$statistic-width});
   float: right;
   height: 100%;
 }

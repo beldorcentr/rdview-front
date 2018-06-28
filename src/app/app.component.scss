@@ -1,7 +1,9 @@
+@import '~app/shared/styles/main.scss';
+
 .header {
-  height: 2em;
+  height: $header-height;
 }
 
 .content {
-  height: calc(100% - 2em);
+  height: calc(100% - #{$header-height});
 }

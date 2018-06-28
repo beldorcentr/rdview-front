@@ -1,13 +1,4 @@
-$passage-color: rgba(#FFFF00, .5);
-$selected-passage-color: rgba(#FF0000, .5);
-
-$passage-arrows-color: darken($passage-color, 20%);
-$selected-passage-arrows-color: darken($selected-passage-color, 20%);
-
-$arrows-left-direction: 45deg;
-$arrows-right-direction: 135deg;
-
-$milestones-height: 1.5em;
+@import '~app/shared/styles/main.scss';
 
 .passage-selector {
   overflow: hidden;
@@ -16,7 +7,7 @@ $milestones-height: 1.5em;
 }
 
 .milestones {
-  height: $milestones-height;
+  height: $passage-milestones-height;
 }
 
 .milestone {
@@ -29,7 +20,7 @@ $milestones-height: 1.5em;
 
 .passages {
   position: relative;
-  max-height: calc(100% - #{$milestones-height});
+  max-height: calc(100% - #{$passage-milestones-height});
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -57,9 +48,9 @@ $milestones-height: 1.5em;
 
 .kmmark,
 .current-position {
-  height: calc(100% - #{$milestones-height});
+  height: calc(100% - #{$passage-milestones-height});
   position: absolute;
-  top: $milestones-height;
+  top: $passage-milestones-height;
   pointer-events: none;
 }
 
@@ -111,30 +102,30 @@ $milestones-height: 1.5em;
 }
 
 .passage.forward-direction .top {
-  @include passage-background($passage-arrows-color, $arrows-left-direction)
+  @include passage-background($passage-arrows-color, $passage-arrows-left-direction)
 }
 .passage.forward-direction .bottom {
-  @include passage-background($passage-arrows-color, $arrows-right-direction)
+  @include passage-background($passage-arrows-color, $passage-arrows-right-direction)
 }
 
 .passage.backward-direction .top {
-  @include passage-background($passage-arrows-color, $arrows-right-direction)
+  @include passage-background($passage-arrows-color, $passage-arrows-right-direction)
 }
 .passage.backward-direction .bottom {
-  @include passage-background($passage-arrows-color, $arrows-left-direction)
+  @include passage-background($passage-arrows-color, $passage-arrows-left-direction)
 }
 
 
 .passage.selected.forward-direction .top {
-  @include passage-background($selected-passage-arrows-color, $arrows-left-direction)
+  @include passage-background($passage-selected-arrows-color, $passage-arrows-left-direction)
 }
 .passage.selected.forward-direction .bottom {
-  @include passage-background($selected-passage-arrows-color, $arrows-right-direction)
+  @include passage-background($passage-selected-arrows-color, $passage-arrows-right-direction)
 }
 
 .passage.selected.backward-direction .top {
-  @include passage-background($selected-passage-arrows-color, $arrows-right-direction)
+  @include passage-background($passage-selected-arrows-color, $passage-arrows-right-direction)
 }
 .passage.selected.backward-direction .bottom {
-  @include passage-background($selected-passage-arrows-color, $arrows-left-direction)
+  @include passage-background($passage-selected-arrows-color, $passage-arrows-left-direction)
 }

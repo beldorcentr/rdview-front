@@ -1,3 +1,7 @@
+@import '~app/shared/styles/main.scss';
+
+$statistic-selected-color: rgba(rdview-color('accent'), .3);
+
 :host {
   text-align: center;
 }
@@ -19,5 +23,5 @@
 }
 
 tr.selected {
-  background-color: rgba(255, 0, 0, .3);
+  background-color: $statistic-selected-color;
 }

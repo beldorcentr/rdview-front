@@ -1,0 +1,29 @@
+$rdview-colors: (
+  'primary': #87CFFA, 
+  'accent': #3AA6E6,
+  'secondary': #FFE4C4,
+  'foreground': #B6E3FD,
+  'background': #FFFFFF
+);
+
+@function rdview-color($key: 'primary') {
+  @return map-get($rdview-colors, $key);
+}
+
+$header-height: 2em;
+
+$photo-view-control-container-width: 25em;
+$photo-view-map-height: 20em;
+
+$loading-indicator-size: 4em;
+$statistic-width: 35em;
+
+$passage-color: rgba(#FFFF00, .5);
+$selected-passage-color: rgba(#FF0000, .5);
+$passage-arrows-color: darken($passage-color, 20%);
+$passage-selected-arrows-color: darken($selected-passage-color, 20%);
+$passage-arrows-left-direction: 45deg;
+$passage-arrows-right-direction: 135deg;
+$passage-milestones-height: 1.5em;
+
+$position-moving-color: #FF0000;
