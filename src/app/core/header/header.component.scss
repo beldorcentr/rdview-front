@@ -1,14 +1,40 @@
+$header-height: 2em;
+$header-color: #5bc0de;
+$header-link-hover-color: #5ba0ee;
+$header-link-active-color: #5b90fe;
+$header-text-color: white;
+
 .header {
-  height: 2em;
-  line-height: 2em;
-  vertical-align: middle;
-  background-color: #5bc0de;
+  height: $header-height;
+  line-height: $header-height;
+  background-color: $header-color;
+  color: $header-text-color;
+}
+
+.header a {
+  display: block;
+  float: left;
+  height: $header-height;
+  line-height: $header-height;
+  text-align: center;
+  text-decoration: none;
+  color: $header-text-color;
+  padding: 0 1em;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background-color: $header-link-hover-color;
+  }
+
+  &.active-route {
+    background-color: $header-link-active-color;
+  }
 }
 
 .user {
   float: right;
   padding-right: .5em;
-  color: white;
 }
 
 .btn.logout {
