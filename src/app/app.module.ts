@@ -67,19 +67,32 @@ export class AppModule {
 
   constructor(private oidcSecurityService: OidcSecurityService,
       private oidcConfigService: OidcConfigService) {
+    this.configureOauth();
+  }
+
+  private configureOauth() {
     this.oidcConfigService.onConfigurationLoaded.subscribe(() => {
-      const openIDImplicitFlowConfiguration = new OpenIDImplicitFlowConfiguration();
-      openIDImplicitFlowConfiguration.stsServer = environment.authorizationEndpoint;
-      openIDImplicitFlowConfiguration.redirect_url = environment.redirectUrl;
-      openIDImplicitFlowConfiguration.client_id = environment.clientId;
-      openIDImplicitFlowConfiguration.post_logout_redirect_uri = environment.postLogoutRedirectUrl;
-      openIDImplicitFlowConfiguration.post_login_route = environment.postLoginRoute;
-      openIDImplicitFlowConfiguration.max_id_token_iat_offset_allowed_in_seconds = environment.maxTokenOffsetInSeconds;
-
-      const authWellKnownEndpoints = new AuthWellKnownEndpoints();
-      authWellKnownEndpoints.setWellKnownEndpoints(this.oidcConfigService.wellKnownEndpoints);
-
-      this.oidcSecurityService.setupModule(openIDImplicitFlowConfiguration, authWellKnownEndpoints);
+      try {
+        this.initOauthConfiguration();
+      } catch (err) {
+        // OAuth init error
+        alert('Произошла ошибка настройки авторизации. Приложение не сможет работать.');
+      }
     });
+  }
+
+  private initOauthConfiguration() {
+    const openIDImplicitFlowConfiguration = new OpenIDImplicitFlowConfiguration();
+    openIDImplicitFlowConfiguration.stsServer = environment.authorizationEndpoint;
+    openIDImplicitFlowConfiguration.redirect_url = environment.redirectUrl;
+    openIDImplicitFlowConfiguration.client_id = environment.clientId;
+    openIDImplicitFlowConfiguration.post_logout_redirect_uri = environment.postLogoutRedirectUrl;
+    openIDImplicitFlowConfiguration.post_login_route = environment.postLoginRoute;
+    openIDImplicitFlowConfiguration.max_id_token_iat_offset_allowed_in_seconds = environment.maxTokenOffsetInSeconds;
+
+    const authWellKnownEndpoints = new AuthWellKnownEndpoints();
+    authWellKnownEndpoints.setWellKnownEndpoints(this.oidcConfigService.wellKnownEndpoints);
+
+    this.oidcSecurityService.setupModule(openIDImplicitFlowConfiguration, authWellKnownEndpoints);
   }
 }
