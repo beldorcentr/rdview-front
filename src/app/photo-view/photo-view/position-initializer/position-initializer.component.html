@@ -1,6 +1,7 @@
 <div class="row-container clearfix">
   <div class="road-search-container">
     <app-road-typeahead-input
+      [roadName]="roadName"
       (selectRoad)="selectCurrentRoad($event)"
       (enterKeyup)="initByRoad()">
     </app-road-typeahead-input>
