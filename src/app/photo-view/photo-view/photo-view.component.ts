@@ -47,7 +47,7 @@ export class PhotoViewComponent implements OnInit {
   private initPosition$ = this.initPositionSubject.asObservable();
 
   private currentPosition$: Observable<CurrentPosition>;
-  private photoBlob$: Observable<Blob>;
+  private newPhoto$: Observable<{ error?: any, blob?: Blob }>;
 
   @ViewChild('roadphoto') photoElement: ElementRef;
 
@@ -93,20 +93,33 @@ export class PhotoViewComponent implements OnInit {
       err => this.showMovementError(err)
     );
 
-    this.photoBlob$ = this.currentPosition$.pipe(
-      switchMap(p => this.http.get(p.currentPhoto.imgUrl, {
-          headers: new HttpHeaders()
-            .set('Authorization', this.authorizationHeader),
-          responseType: 'blob'
+    this.newPhoto$ = this.currentPosition$
+      .pipe(
+        switchMap((p: any) => {
+          return new Observable(observer => {
+            this.http.get(p.currentPhoto.imgUrl, {
+              headers: new HttpHeaders()
+                .set('Authorization', this.authorizationHeader),
+              responseType: 'blob'
+            }).subscribe(blob => {
+              observer.next({
+                blob
+              });
+            }, error => {
+              observer.next({
+                error
+              });
+            });
+          });
         })
-      )
-    );
+      );
 
-    this.photoBlob$.subscribe(response => {
-      this.wheelZoom.setSrcAndReset(URL.createObjectURL(response));
-    }, err => {
-      this.showImageLoadingError(err);
-      this.photoElement.nativeElement.removeAttribute('src');
+    this.newPhoto$.subscribe(photo => {
+      if (photo.error) {
+        this.showImageLoadingError(photo.error);
+      } else {
+        this.wheelZoom.setSrcAndReset(URL.createObjectURL(photo.blob));
+      }
     });
   }
 
@@ -201,10 +214,19 @@ export class PhotoViewComponent implements OnInit {
   }
 
   handleAuthLoadingError(err) {
-    if (!err || !err.response) {
+    if (!err) {
       return;
     }
-    switch (err.response.status) {
+
+    const status = err.response ?
+      err.response.status :
+      err.status;
+
+    if (!status) {
+      return;
+    }
+
+    switch (status) {
       case 401:
         this.router.navigate(['/login']);
         break;
