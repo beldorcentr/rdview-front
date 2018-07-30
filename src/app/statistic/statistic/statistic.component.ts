@@ -44,6 +44,7 @@ export class StatisticComponent implements OnInit {
   }
 
   selectRoad(road: Road) {
+    this.selectedRoadStatistic = null;
     this.loadingIndicatorService.isLoading = true;
     this.statisticService.getRoadStatisticByYear(road.id)
       .then(roadStatisticByYear => this.initRoadStatisticByYear(roadStatisticByYear),
