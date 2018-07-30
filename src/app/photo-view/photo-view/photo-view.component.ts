@@ -86,7 +86,7 @@ export class PhotoViewComponent implements OnInit {
       this.previousPhoto$.flatMap(() =>
         Observable.fromPromise(this.rdviewService.getPreviousPhoto())
       )
-    );
+    ).share();
 
     this.currentPosition$.subscribe(
       currentPosition => this.handleNewPosition(currentPosition),
@@ -160,10 +160,7 @@ export class PhotoViewComponent implements OnInit {
         if (p1.date.getFullYear() === p2.date.getFullYear() &&
             p1.date.getMonth() === p2.date.getMonth() &&
             p1.date.getDate() === p2.date.getDate()) {
-          if (p1.direction === 'forward') {
-            return -1;
-          }
-          return 1;
+          return p1.direction === 'forward' ? -1 : 1;
         }
         return p2.date.getTime() - p1.date.getTime();
       });
