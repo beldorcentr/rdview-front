@@ -15,7 +15,10 @@
         </button>
       </div>
       <div class="modal-body">
-        <app-network-statistic
+        <div *ngIf="!networkStatisticByYear" class="modal-loading">
+          <i class="fa fa-circle-o-notch fa-2x fa-spin fa-fw"></i>
+        </div>
+        <app-network-statistic *ngIf="networkStatisticByYear"
           [networkStatisticByYear]="networkStatisticByYear">
         </app-network-statistic>
       </div>
