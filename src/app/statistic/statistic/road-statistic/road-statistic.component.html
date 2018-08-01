@@ -10,6 +10,7 @@
           <th>Начало, км</th>
           <th>Конец, км</th>
           <th>Длина, км</th>
+          <th>Направление</th>
           <th>Фотографий</th>
         </tr>
       </thead>
@@ -20,6 +21,7 @@
           <td>{{ s.rdBeg | number}}</td>
           <td>{{ s.rdEnd | number}}</td>
           <td>{{ s.kmLength | number}}</td>
+          <td>{{ s.direction === 'forward' ? 'Прямое' : 'Обратное' }}</td>
           <td>{{ s.photosCount }}</td>
         </tr>
       </tbody>
