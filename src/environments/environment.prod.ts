@@ -1,8 +1,8 @@
 import * as L from 'leaflet';
 
 export const environment = {
-  production: false,
-  apiUrl: 'api',
+  production: true,
+  apiUrl: 'api/v1.1',
 
   authorizationEndpoint: 'https://i.centr.by/oauth2',
   redirectUrl: 'https://i.centr.by/rdview',

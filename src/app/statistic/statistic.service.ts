@@ -6,6 +6,7 @@ import { RoadType } from './road-type';
 import { NetworkStatisticByYear } from './network-statistic-by-year';
 import { RoadStatistic } from './road-statistic';
 import { RoadStatisticByYear } from './road-statistic-by-year';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class StatisticService {
@@ -16,7 +17,7 @@ export class StatisticService {
     { type: RoadType.Local, priority: 80 }
   ];
 
-  private statisticUrl = 'api/v1/statistic';
+  private statisticUrl = environment.apiUrl + '/statistic';
 
   get headers() {
     return new HttpHeaders({
