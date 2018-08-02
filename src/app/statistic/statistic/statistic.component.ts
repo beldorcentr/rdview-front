@@ -15,6 +15,7 @@ import { ToasterService } from 'angular2-toaster';
 })
 export class StatisticComponent implements OnInit {
 
+  isNetworkStatisticByYearLoadingError = false;
   networkStatisticByYear: NetworkStatisticByYear;
   roadStatisticByYear: RoadStatisticByYear;
 
@@ -32,6 +33,8 @@ export class StatisticComponent implements OnInit {
     this.statisticService.getNetworkStatisticByYear()
       .then(networkStatisticByYear => {
         this.networkStatisticByYear = networkStatisticByYear;
+      }, err => {
+        this.isNetworkStatisticByYearLoadingError = true;
       });
   }
 

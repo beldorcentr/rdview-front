@@ -15,8 +15,11 @@
         </button>
       </div>
       <div class="modal-body">
-        <div *ngIf="!networkStatisticByYear" class="modal-loading">
+        <div *ngIf="!networkStatisticByYear && !isNetworkStatisticByYearLoadingError" class="modal-loading">
           <i class="fa fa-circle-o-notch fa-2x fa-spin fa-fw"></i>
+        </div>
+        <div *ngIf="isNetworkStatisticByYearLoadingError">
+          Ошибка загрузки статистики по всей сети 
         </div>
         <app-network-statistic *ngIf="networkStatisticByYear"
           [networkStatisticByYear]="networkStatisticByYear">
