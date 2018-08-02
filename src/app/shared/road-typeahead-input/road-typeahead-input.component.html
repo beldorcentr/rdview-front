@@ -21,8 +21,9 @@
     class="form-control"
     (keyup.enter)="enterUp()">
   
-  <div class="typeahead-status" *ngIf="typeaheadLoading || typeaheadNoResults">
-    <div *ngIf="typeaheadLoading">Загрузка</div>
-    <div *ngIf="typeaheadNoResults && !typeaheadLoading">&#10060; Ничего не найдено</div>
+  <div class="typeahead-status" *ngIf="isTypeaheadLoading || isTypeaheadNoResults || isLoadingError">
+    <div *ngIf="isTypeaheadLoading">Загрузка</div>
+    <div *ngIf="isLoadingError && !isTypeaheadLoading">Ошибка загрузки</div>
+    <div *ngIf="isTypeaheadNoResults && !isTypeaheadLoading">&#10060; Ничего не найдено</div>
   </div>
 </div>

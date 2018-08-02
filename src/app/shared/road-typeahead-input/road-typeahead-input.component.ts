@@ -20,21 +20,22 @@ export class RoadTypeaheadInputComponent implements OnChanges {
 
   isDisplayAutocompletePopup = false;
   isAutocompleteLoading = false;
+  isLoadingError = false;
 
   asyncSelectedRoad: string;
-  typeaheadLoading: boolean;
-  typeaheadNoResults: boolean;
+  isTypeaheadLoading: boolean;
+  isTypeaheadNoResults: boolean;
   roadDataSource: Observable<Road[]>;
 
   private roadService: RoadService;
   private selectedRoad: Road;
 
   changeTypeaheadLoading(e: boolean): void {
-    this.typeaheadLoading = e;
+    this.isTypeaheadLoading = e;
   }
 
   changeTypeaheadNoResults(e: boolean): void {
-    this.typeaheadNoResults = e;
+    this.isTypeaheadNoResults = e;
   }
 
   typeaheadOnSelect(e: TypeaheadMatch): void {
@@ -51,7 +52,13 @@ export class RoadTypeaheadInputComponent implements OnChanges {
 
     this.roadDataSource = Observable.create((observer: any) => {
       this.roadService.getRoads(this.asyncSelectedRoad)
-        .then(result => observer.next(result));
+        .then(result => {
+          this.isLoadingError = false;
+          observer.next(result);
+        }, err => {
+          this.isTypeaheadLoading = false;
+          this.isLoadingError = true;
+        });
     });
   }
 
