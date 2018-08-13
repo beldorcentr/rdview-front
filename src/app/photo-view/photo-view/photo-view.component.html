@@ -1,47 +1,42 @@
 <div class="content">
-  <div class="photo-container">
-    <img #roadphoto class="road-photo">
-  </div>
-
-  <div class="control-container">
-    <div class="map-container">
-      <app-map-position
-        [isInited]="isInited"
-        [lat]="lat"
-        [lon]="lon"
-        [azimuth]="azimuth"
-        (selectPosition)="initByCoordinates($event)">
-      </app-map-position>
+  <app-sidebar (toggleEnd)="toggleEnd($event)">
+    <div class="sidebar-panel">
+      <div class="control-container">
+        <app-position-control
+          [isInited]="isInited"
+          [lat]="lat"
+          [lon]="lon"
+          [azimuth]="azimuth"
+          [roadId]="roadId"
+          [roadName]="roadName"
+          [km]="km"
+          [passages]="passages"
+          [selectedPassage]="selectedPassage"
+          [position]="position"
+          (initByCoordinates)="initByCoordinates($event)"
+          (initByRoad)="initByRoad($event)"
+          (nextPhoto)="nextPhoto()"
+          (previousPhoto)="previousPhoto()"
+          (selectPassage)="selectPassage($event)">
+        </app-position-control>
+      </div>
     </div>
-
-    <app-position-initializer
-      [roadName]="roadName"
-      [roadId]="roadId"
-      [km]="km"
-      [lat]="lat"
-      [lon]="lon"
-      [isInited]="isInited"
-      (selectRoad)="initByRoad($event)"
-      (selectCoordinates)="initByCoordinates($event)">
-    </app-position-initializer>
-
-    <app-position-movement
-      [isInited]="isInited"
-      (previousPhoto)="previousPhoto()"
-      (nextPhoto)="nextPhoto()"
-      (selectRoad)="initByRoad($event)"
-      (selectCoordinates)="initByCoordinates($event)">
-    </app-position-movement>
-
-    <div class="passage-selector">
-      <app-passage-selector *ngIf="isInited"
-        [passages]="passages"
-        [selectedPassage]="selectedPassage"
-        [beginKm]="position.closeToCurrentBeginKm"
-        [endKm]="position.closeToCurrentEndKm"
-        [currentKm]="position.currentPhoto.km"
-        (selectPassage)="selectPassage($event)">
-      </app-passage-selector>
+    <div class="sidebar-content">
+      <div *ngIf="!isSideBarOpen && isInited" class="simple-control-container">
+        <app-simple-position-control
+          [isInited]="isInited"
+          [roadName]="roadName"
+          [km]="km"
+          [lat]="lat"
+          [lon]="lon"
+          [date]="date"
+          (nextPhoto)="nextPhoto()"
+          (previousPhoto)="previousPhoto()">
+        </app-simple-position-control>
+      </div>
+      <div class="photo-container">
+        <img #roadphoto class="road-photo">
+      </div>
     </div>
-  </div>
+  </app-sidebar>
 </div>

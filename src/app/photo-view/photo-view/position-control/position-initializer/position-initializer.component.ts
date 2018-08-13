@@ -26,6 +26,8 @@ export class PositionInitializerComponent implements OnChanges {
   isDisplayAutocompletePopup = false;
   isAutocompleteLoading = false;
 
+  selectedKm: number;
+  selectedRoad: string;
   asyncSelectedRoad: string;
   typeaheadLoading: boolean;
   typeaheadNoResults: boolean;
@@ -59,6 +61,8 @@ export class PositionInitializerComponent implements OnChanges {
   }
 
   ngOnChanges(changes): void {
+    this.selectedRoad = this.roadName;
+    this.selectedKm = this.km;
     this.asyncSelectedRoad = this.roadName;
   }
 
@@ -77,6 +81,8 @@ export class PositionInitializerComponent implements OnChanges {
   }
 
   clearRoad() {
+    this.selectedRoad = null;
+    this.selectedKm = null;
     this.asyncSelectedRoad = null;
   }
 

@@ -1,0 +1,39 @@
+<div class="map-container">
+  <app-map-position
+    [isInited]="isInited"
+    [lat]="lat"
+    [lon]="lon"
+    [azimuth]="azimuth"
+    (selectPosition)="emitInitByCoordinates($event)">
+  </app-map-position>
+</div>
+
+<app-position-initializer
+  [roadName]="roadName"
+  [roadId]="roadId"
+  [km]="km"
+  [lat]="lat"
+  [lon]="lon"
+  [isInited]="isInited"
+  (selectRoad)="emitInitByRoad($event)"
+  (selectCoordinates)="emitInitByCoordinates($event)">
+</app-position-initializer>
+
+<app-position-movement
+  [isInited]="isInited"
+  (previousPhoto)="emitPreviousPhoto()"
+  (nextPhoto)="emitNextPhoto()"
+  (selectRoad)="emitInitByRoad($event)"
+  (selectCoordinates)="emitInitByCoordinates($event)">
+</app-position-movement>
+
+<div class="passage-selector">
+  <app-passage-selector *ngIf="isInited"
+    [passages]="passages"
+    [selectedPassage]="selectedPassage"
+    [beginKm]="position.closeToCurrentBeginKm"
+    [endKm]="position.closeToCurrentEndKm"
+    [currentKm]="position.currentPhoto.km"
+    (selectPassage)="emitSelectPassage($event)">
+  </app-passage-selector>
+</div>

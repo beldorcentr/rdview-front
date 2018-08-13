@@ -14,6 +14,7 @@ import { RoadTypeaheadInputComponent } from './road-typeahead-input/road-typeahe
 import { TypeaheadModule } from 'ngx-bootstrap';
 import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 import { LoadingIndicatorService } from './loading-indicator/loading-indicator.service';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { LoadingIndicatorService } from './loading-indicator/loading-indicator.s
   ],
   declarations: [
     RoadTypeaheadInputComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    SidebarComponent
   ],
   providers: [
     AuthGuardService,
@@ -37,7 +39,8 @@ import { LoadingIndicatorService } from './loading-indicator/loading-indicator.s
   ],
   exports: [
     RoadTypeaheadInputComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    SidebarComponent
   ]
 })
 export class SharedModule { }

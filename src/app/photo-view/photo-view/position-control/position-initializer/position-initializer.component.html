@@ -1,7 +1,7 @@
 <div class="row-container clearfix">
   <div class="road-search-container">
     <app-road-typeahead-input
-      [roadName]="roadName"
+      [roadName]="selectedRoad"
       (selectRoad)="selectCurrentRoad($event)"
       (enterKeyup)="initByRoad()">
     </app-road-typeahead-input>
@@ -16,7 +16,7 @@
       class="form-control km"
       placeholder="км"
       title="Километр"
-      [(ngModel)]="km"
+      [(ngModel)]="selectedKm"
       step=".001"
       (keyup.enter)="initByRoad()">
   </div>

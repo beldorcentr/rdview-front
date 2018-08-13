@@ -1,0 +1,66 @@
+@import '~app/shared/styles/main.scss';
+
+$background-color: rdview-color('background');
+
+.sidebar-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: $photo-view-control-container-width;;
+  bottom: 0;
+  transition: 0.5s;
+}
+
+.content-full-width {
+  right: 0;
+}
+
+.sidebar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: $photo-view-control-container-width - $sidebar-border-width;
+  border-left: $sidebar-border-width solid gray;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transition: 0.5s;
+}
+
+.sidebar-closed {
+  right: -$photo-view-control-container-width;
+}
+
+.toggle-button {
+  display: inline-block;
+  font-size: 20px;
+  line-height: $sidebar-toggle-button-height;
+  width: $sidebar-toggle-button-width;
+  height: $sidebar-toggle-button-height;
+  position: absolute;
+  top: 0;
+  left: -$sidebar-toggle-button-width;
+  text-align: center;
+  vertical-align: bottom;
+  z-index: 2500;
+  background-color: $background-color;
+  border-bottom: 1px solid grey;
+  border-left: 1px solid grey;
+  border-bottom-left-radius: 50px;
+  outline: none;
+  user-select: none;
+  cursor: pointer;
+
+  .fa {
+    padding-left: .5em;
+  }
+}

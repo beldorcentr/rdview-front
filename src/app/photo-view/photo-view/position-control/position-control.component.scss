@@ -1,0 +1,11 @@
+@import '~app/shared/styles/main.scss';
+
+.map-container {
+  height: $photo-view-map-height;
+  display: block;
+}
+
+.passage-selector {
+  min-height: 5em;
+  flex: 1;
+}

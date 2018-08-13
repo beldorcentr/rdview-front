@@ -1,0 +1,13 @@
+<div class="sidebar-container">
+  <div class="sidebar" [ngClass]="{'sidebar-closed': !isSidebarOpen}">
+    <ng-content select=".sidebar-panel"></ng-content>
+
+    <div class="toggle-button no-print" (click)="toggleSidebar()">
+      <i class="fa" [ngClass]="{'fa-arrow-right': isSidebarOpen, 'fa-arrow-left': !isSidebarOpen}" aria-hidden="true"></i>
+    </div>
+  </div>
+
+  <div class="content" [ngClass]="{'content-full-width': !isSidebarOpen}">
+    <ng-content select=".sidebar-content"></ng-content>
+  </div>
+</div>

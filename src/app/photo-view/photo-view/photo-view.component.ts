@@ -29,9 +29,11 @@ export class PhotoViewComponent implements OnInit {
   lat: number;
   lon: number;
   azimuth: number;
+  date: Date;
 
   isInited = false;
   isLoading = false;
+  isSideBarOpen = true;
 
   private rdviewService: RdviewService;
   private authorizationHeader: string;
@@ -66,6 +68,11 @@ export class PhotoViewComponent implements OnInit {
       this.initUserAuthData();
       this.initCurrentPositionStreams();
     });
+  }
+
+  toggleEnd(event: { isSideBarOpen: boolean }) {
+    this.wheelZoom.reset();
+    this.isSideBarOpen = event.isSideBarOpen;
   }
 
   initUserAuthData() {
@@ -153,6 +160,7 @@ export class PhotoViewComponent implements OnInit {
     this.roadName = position.road.name;
     this.roadId = position.road.id;
     this.km = position.currentPhoto.km;
+    this.date = position.currentPhoto.date;
 
     this.passages = position.closeToCurrentPassages
       .sort((p1, p2) => {

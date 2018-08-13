@@ -1,0 +1,14 @@
+<div class="stats">
+  <div [title]="roadName + ' ' + km + 'км'">{{ km | number }} км</div>
+  <div [title]="lat + 'N ' + lon + 'E'">{{ lat | number : '1.1-2' }}N {{ lon | number : '1.1-2' }}E</div>
+  <div>{{ date | date : 'shortDate' }}</div>
+</div>
+
+<div class="control-group">
+  <button type="button" class="btn btn-primary" (click)="emitPreviousPhoto()" [disabled]="!isInited" title="Предыдущая фотография в обратном направлении">
+    <i class="fa fa-fw fa-lg fa-chevron-left"></i>
+  </button>
+  <button type="button" class="btn btn-primary" (click)="emitNextPhoto()" [disabled]="!isInited" title="Следующая фотография в прямом направлении">
+    <i class="fa fa-fw fa-lg fa-chevron-right"></i>
+  </button>
+</div>
