@@ -28,6 +28,7 @@ export class PositionInitializerComponent implements OnChanges {
 
   selectedKm: number;
   selectedRoad: string;
+  selectedRoadId: number;
   asyncSelectedRoad: string;
   typeaheadLoading: boolean;
   typeaheadNoResults: boolean;
@@ -45,7 +46,7 @@ export class PositionInitializerComponent implements OnChanges {
 
   typeaheadOnSelect(e: TypeaheadMatch): void {
     this.asyncSelectedRoad = e.item.name;
-    this.roadId = e.item.id;
+    this.selectedRoadId = e.item.id;
   }
 
   constructor(private authService: AuthService) {
@@ -75,18 +76,19 @@ export class PositionInitializerComponent implements OnChanges {
 
   initByRoad() {
     this.selectRoad.emit({
-      roadId: this.roadId,
-      km: this.km || 0
+      roadId: this.selectedRoadId || this.roadId,
+      km: this.selectedKm || 0
     });
   }
 
   clearRoad() {
     this.selectedRoad = null;
+    this.selectedRoadId = null;
     this.selectedKm = null;
     this.asyncSelectedRoad = null;
   }
 
   selectCurrentRoad(road: Road) {
-    this.roadId = road.id;
+    this.selectedRoadId = road.id;
   }
 }

@@ -32,6 +32,7 @@ $background-color: rdview-color('background');
   display: flex;
   flex-flow: column;
   padding: .5em;
+  user-select: none;
 }
 
 .passage-selector {
