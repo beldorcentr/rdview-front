@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { ToasterService } from 'angular2-toaster';
 import { mouseWheelZoom, MouseWheelZoom  } from 'mouse-wheel-zoom';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { switchMap } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
@@ -56,6 +56,7 @@ export class PhotoViewComponent implements OnInit {
   constructor(private authService: AuthService,
       private http: HttpClient,
       private router: Router,
+      private route: ActivatedRoute,
       private toasterService: ToasterService,
       private loadingIndicatorService: LoadingIndicatorService) {
 
@@ -132,6 +133,36 @@ export class PhotoViewComponent implements OnInit {
 
   ngOnInit() {
     this.wheelZoom = mouseWheelZoom({ element: this.photoElement.nativeElement });
+    this.initPositionFromUrl();
+  }
+
+  initPositionFromUrl() {
+    this.route.queryParams.subscribe(params => {
+      const roadId = +params['roadId'];
+      const km = +params['km'];
+      const year = +params['year'];
+      const direction = params['direction'];
+
+      if (roadId) {
+        this.initByRoad({
+          roadId,
+          km,
+          year,
+          direction
+        });
+        return;
+      }
+
+      const lat = params['lat'];
+      const lon = params['lon'];
+
+      if (lon != null && lat != null) {
+        this.initByCoordinates({
+          lat: +lat,
+          lon: +lon
+        });
+      }
+    });
   }
 
   nextPhoto() {
@@ -191,21 +222,48 @@ export class PhotoViewComponent implements OnInit {
   initByCoordinates({ lat, lon }: { lat: number, lon: number}) {
     this.loadingIndicatorService.isLoading = true;
     this.rdviewService.initByCoordinates(lat, lon)
-      .then(currentPosition => this.initPositionSubject.next(currentPosition),
-        err => this.showInitError(err));
+      .then(currentPosition => {
+        if (currentPosition.isEmptyResult) {
+          this.showEmptyResultError();
+          return;
+        }
+        this.initPositionSubject.next(currentPosition);
+      }, err => this.showInitError(err));
   }
 
-  initByRoad({ roadId, km }: { roadId: number, km: number }) {
+  initByRoad({ roadId, km, year, direction }: { roadId: number, km: number, year?: number, direction?: 'forward' | 'backward' }) {
     this.loadingIndicatorService.isLoading = true;
     this.rdviewService.initByRoad(roadId, km)
-      .then(currentPosition => this.initPositionSubject.next(currentPosition),
-        err => this.showInitError(err));
+      .then(currentPosition => {
+        if (currentPosition.isEmptyResult) {
+          this.showEmptyResultError();
+          return;
+        }
+        if (year || direction) {
+          const selectedPassage = currentPosition.passages
+            .find(p => (year == null || p.date.getFullYear() === year) &&
+              (direction == null || p.direction === direction) &&
+              (!!km || (p.beginKm <= km && km <= p.endKm)));
+
+          if (selectedPassage) {
+            this.rdviewService.setPassage(selectedPassage.id, km)
+              .then(position => this.initPositionSubject.next(position));
+            return;
+          }
+        }
+        this.initPositionSubject.next(currentPosition);
+      }, err => this.showInitError(err));
   }
 
   showInitError(err) {
     this.handleAuthLoadingError(err);
     this.loadingIndicatorService.isLoading = false;
     this.toasterService.pop('error', 'Ошибка связи с сервером');
+  }
+
+  showEmptyResultError() {
+    this.loadingIndicatorService.isLoading = false;
+    this.toasterService.pop('info', 'В выбранном месте нет фотографий');
   }
 
   showMovementError(err) {

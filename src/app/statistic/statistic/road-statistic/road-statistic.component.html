@@ -12,6 +12,7 @@
           <th>Длина, км</th>
           <th>Направление</th>
           <th>Фотографий</th>
+          <th>Просмотр</th>
         </tr>
       </thead>
       <tbody>
@@ -23,6 +24,7 @@
           <td>{{ s.kmLength | number}}</td>
           <td>{{ s.direction === 'forward' ? 'Прямое' : 'Обратное' }}</td>
           <td>{{ s.photosCount }}</td>
+          <td><i class="fa fa-search" (click)="viewRoadStatistic(s)"></i></td>
         </tr>
       </tbody>
     </table>
