@@ -11,6 +11,8 @@ import { switchMap } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { Subject } from 'rxjs/Subject';
 import { LoadingIndicatorService } from 'app/shared/loading-indicator/loading-indicator.service';
+import { StatisticService } from 'app/statistic/statistic.service';
+import { RoadStatistic } from 'app/statistic/road-statistic';
 
 @Component({
   selector: 'app-photo-view',
@@ -30,6 +32,7 @@ export class PhotoViewComponent implements OnInit {
   lon: number;
   azimuth: number;
   date: Date;
+  roadStatistic: RoadStatistic[];
 
   isInited = false;
   isLoading = false;
@@ -58,6 +61,7 @@ export class PhotoViewComponent implements OnInit {
       private router: Router,
       private route: ActivatedRoute,
       private toasterService: ToasterService,
+      private statisticService: StatisticService,
       private loadingIndicatorService: LoadingIndicatorService) {
 
     this.initUserAuthData();
@@ -227,6 +231,7 @@ export class PhotoViewComponent implements OnInit {
           this.showEmptyResultError();
           return;
         }
+        this.displayRoadGeometry(currentPosition.road.id);
         this.initPositionSubject.next(currentPosition);
       }, err => this.showInitError(err));
   }
@@ -239,6 +244,7 @@ export class PhotoViewComponent implements OnInit {
           this.showEmptyResultError();
           return;
         }
+        this.displayRoadGeometry(roadId);
         if (year || direction) {
           const selectedPassage = currentPosition.passages
             .find(p => (year == null || p.date.getFullYear() === year) &&
@@ -253,6 +259,15 @@ export class PhotoViewComponent implements OnInit {
         }
         this.initPositionSubject.next(currentPosition);
       }, err => this.showInitError(err));
+  }
+
+  displayRoadGeometry(roadId: number) {
+    this.roadStatistic = null;
+    this.statisticService.getRoadStatistic(roadId).then(statistic => {
+      this.roadStatistic = statistic;
+    }, err => {
+      this.showRoadStatisticLoadingError();
+    });
   }
 
   showInitError(err) {
@@ -274,6 +289,10 @@ export class PhotoViewComponent implements OnInit {
   showImageLoadingError(err) {
     this.handleAuthLoadingError(err);
     this.toasterService.pop('error', 'Ошибка загрузки фотографии');
+  }
+
+  showRoadStatisticLoadingError() {
+    this.toasterService.pop('error', 'Ошибка загрузки статистики по дороге');
   }
 
   handleAuthLoadingError(err) {

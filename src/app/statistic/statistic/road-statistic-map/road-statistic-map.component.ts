@@ -40,15 +40,12 @@ export class RoadStatisticMapComponent implements OnInit, OnChanges {
     // zIndex has no effect on vector objects.
     // add as last element to be on top
     if (this.selectedRoadStatistic) {
-      // fitBounds
       const selectedRoadPart = this.createRoadGeoJson(this.selectedRoadStatistic, true);
       this.roadParts.push(selectedRoadPart);
       currentStatisticBounds = selectedRoadPart.getBounds();
     } else {
-      // fitBounds to all elements
       const roadPartsFeatureGroup = L.featureGroup(this.roadParts);
       currentStatisticBounds = L.featureGroup(this.roadParts).getBounds();
-      // this.map.fitBounds(roadPartsFeatureGroup.getBounds());
     }
 
     if (!this.map.getBounds().contains(currentStatisticBounds)) {

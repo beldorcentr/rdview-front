@@ -11,12 +11,14 @@ import { TypeaheadModule } from 'ngx-bootstrap';
 import { SharedModule } from 'app/shared/shared.module';
 import { PositionControlComponent } from './photo-view/position-control/position-control.component';
 import { SimplePositionControlComponent } from './photo-view/simple-position-control/simple-position-control.component';
+import { StatisticModule } from 'app/statistic/statistic.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     SharedModule,
+    StatisticModule,
     PhotoViewRoutingModule,
     TypeaheadModule.forRoot()
   ],

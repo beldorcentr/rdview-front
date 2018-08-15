@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Passage, CurrentPosition } from 'rdview-service';
+import { RoadStatistic } from 'app/statistic/road-statistic';
 
 @Component({
   selector: 'app-position-control',
@@ -18,6 +19,7 @@ export class PositionControlComponent {
   @Input() passages: Passage[];
   @Input() selectedPassage: Passage;
   @Input() position: CurrentPosition;
+  @Input() roadStatistic: RoadStatistic[];
 
   @Output() initByCoordinates = new EventEmitter<{ lat: number, lon: number}>();
   @Output() initByRoad = new EventEmitter<{ roadId: number, km?: number }>();
