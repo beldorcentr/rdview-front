@@ -12,8 +12,8 @@ import { environment } from 'environments/environment';
 export class StatisticService {
 
   private roadTypePriority = [
-    { type: RoadType.Republican, priority: 100 },
-    { type: RoadType.Regional, priority: 90 },
+    { type: RoadType.Magistral, priority: 100 },
+    { type: RoadType.Republican, priority: 90 },
     { type: RoadType.Local, priority: 80 }
   ];
 

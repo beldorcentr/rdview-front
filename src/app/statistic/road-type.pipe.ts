@@ -10,10 +10,10 @@ export class RoadTypePipe implements PipeTransform {
     switch (value) {
       case RoadType.Local:
         return 'Местная';
-      case RoadType.Regional:
-        return 'Региональная';
       case RoadType.Republican:
         return 'Республиканская';
+      case RoadType.Magistral:
+        return 'Магистральная';
     }
     return 'Другая';
   }

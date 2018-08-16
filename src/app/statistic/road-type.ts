@@ -1,5 +1,5 @@
 export enum RoadType {
+  Magistral = 'magistral',
   Republican = 'republican',
-  Regional = 'regional',
   Local = 'local'
 }
