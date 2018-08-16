@@ -32,6 +32,11 @@
   min-width: 1em;
   height: 1.8em;
   position: relative;
+  cursor: pointer;
+
+  &:hover {
+    background-color: shade($passage-color, 10%);
+  }
 }
 
 .passage span {
@@ -44,6 +49,10 @@
 
 .passage.selected {
   background-color: $selected-passage-color;
+
+  &:hover {
+    background-color: shade($selected-passage-color, 10%);
+  }
 }
 
 .kmmark,
