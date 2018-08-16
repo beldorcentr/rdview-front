@@ -5,7 +5,7 @@
 }
 
 .road-search-container {
-  width: calc(100% - 8em);
+  width: calc(100% - 12em);
   float: left;
   position: relative;
 }
@@ -15,16 +15,20 @@
   line-height: 1.7em;
   cursor: not-allowed;
   color: grey;
+  float: left;
+  margin: 0 .1em;
 }
 
 .clear-road.active {
   cursor: pointer;
   color: black;
+  float: left;
 }
 
 .road-km-container {
   width: 6em;
-  float: right;
+  float: left;
+  margin-left: .5em;
 }
 
 .road-name,
@@ -33,10 +37,12 @@
 }
 
 .coord {
-  width: 8.2em;
+  width: 8.9em;
   float: left;
-  padding-left: 0;
-  padding-right: .5em;
+
+  &:first-child {
+    padding-right: .5em;
+  }
 }
 
 .coord input {

@@ -29,48 +29,29 @@ export class PositionInitializerComponent implements OnChanges {
   selectedKm: number;
   selectedRoad: string;
   selectedRoadId: number;
-  asyncSelectedRoad: string;
-  typeaheadLoading: boolean;
-  typeaheadNoResults: boolean;
-  roadDataSource: Observable<Road[]>;
+  selectedLat: number;
+  selectedLon: number;
 
   private roadService: RoadService;
-
-  changeTypeaheadLoading(e: boolean): void {
-    this.typeaheadLoading = e;
-  }
-
-  changeTypeaheadNoResults(e: boolean): void {
-    this.typeaheadNoResults = e;
-  }
-
-  typeaheadOnSelect(e: TypeaheadMatch): void {
-    this.asyncSelectedRoad = e.item.name;
-    this.selectedRoadId = e.item.id;
-  }
 
   constructor(private authService: AuthService) {
     this.roadService = new RoadService({
       apiUrl: environment.apiUrl,
       authorization: this.authService.getAuthorizationHeader()
     });
-
-    this.roadDataSource = Observable.create((observer: any) => {
-      this.roadService.getRoads(this.asyncSelectedRoad)
-        .then(result => observer.next(result));
-    });
   }
 
   ngOnChanges(changes): void {
     this.selectedRoad = this.roadName;
     this.selectedKm = this.km;
-    this.asyncSelectedRoad = this.roadName;
+    this.selectedLat = this.lat;
+    this.selectedLon = this.lon;
   }
 
   initByCoords() {
     this.selectCoordinates.emit({
-      lat: this.lat || 0,
-      lon: this.lon || 0
+      lat: this.selectedLat || this.lat || 0,
+      lon: this.selectedLon || this.lon || 0
     });
   }
 
@@ -85,10 +66,15 @@ export class PositionInitializerComponent implements OnChanges {
     this.selectedRoad = null;
     this.selectedRoadId = null;
     this.selectedKm = null;
-    this.asyncSelectedRoad = null;
+  }
+
+  clearCoordinates() {
+    this.selectedLat = null;
+    this.selectedLon = null;
   }
 
   selectCurrentRoad(road: Road) {
+    this.selectedRoad = road.name;
     this.selectedRoadId = road.id;
   }
 }
