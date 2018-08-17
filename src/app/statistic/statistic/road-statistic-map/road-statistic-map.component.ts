@@ -34,7 +34,8 @@ export class RoadStatisticMapComponent implements OnInit, OnChanges {
 
     this.roadParts = this.roadStatistic
       .filter(rs => rs !== this.selectedRoadStatistic)
-      .map(rs => this.createRoadGeoJson(rs, false));
+      .map(rs => this.createRoadGeoJson(rs, false))
+      .filter(rs => !!rs);
 
     let currentStatisticBounds;
     // zIndex has no effect on vector objects.
@@ -73,6 +74,11 @@ export class RoadStatisticMapComponent implements OnInit, OnChanges {
       type: 'Feature',
       geometry: JSON.parse(rs.geometry)
     };
+
+    if (!geoJson.geometry || (geoJson.geometry.type !== 'LineString' &&
+        geoJson.geometry.type !== 'MultiLineString')) {
+      return;
+    }
 
     return L.geoJSON(geoJson as any, {
       style: style as any

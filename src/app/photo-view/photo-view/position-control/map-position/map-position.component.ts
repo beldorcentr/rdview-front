@@ -57,7 +57,8 @@ export class MapPositionComponent implements OnInit, OnChanges {
 
     if (changes.roadStatistic && Array.isArray(this.roadStatistic)) {
       this.roadParts = this.roadStatistic
-        .map(rs => this.createRoadGeoJson(rs));
+        .map(rs => this.createRoadGeoJson(rs))
+        .filter(rs => !!rs);
     }
   }
 
@@ -86,6 +87,11 @@ export class MapPositionComponent implements OnInit, OnChanges {
       type: 'Feature',
       geometry: JSON.parse(rs.geometry)
     };
+
+    if (!geoJson.geometry || (geoJson.geometry.type !== 'LineString' &&
+        geoJson.geometry.type !== 'MultiLineString')) {
+      return;
+    }
 
     return L.geoJSON(geoJson as any, {
       style: style as any
