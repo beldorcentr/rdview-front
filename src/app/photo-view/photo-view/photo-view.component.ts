@@ -59,7 +59,7 @@ export class PhotoViewComponent implements OnInit {
   constructor(private authService: AuthService,
       private http: HttpClient,
       private router: Router,
-      private route: ActivatedRoute,
+      private activatedRoute: ActivatedRoute,
       private toasterService: ToasterService,
       private statisticService: StatisticService,
       private loadingIndicatorService: LoadingIndicatorService) {
@@ -141,32 +141,32 @@ export class PhotoViewComponent implements OnInit {
   }
 
   initPositionFromUrl() {
-    this.route.queryParams.subscribe(params => {
-      const roadId = +params['roadId'];
-      const km = +params['km'];
-      const year = +params['year'];
-      const direction = params['direction'];
+    const queryParams = this.activatedRoute.snapshot.queryParams;
 
-      if (roadId) {
-        this.initByRoad({
-          roadId,
-          km,
-          year,
-          direction
-        });
-        return;
-      }
+    const roadId = +queryParams['roadId'];
+    const km = +queryParams['km'];
+    const year = +queryParams['year'];
+    const direction = queryParams['direction'];
 
-      const lat = params['lat'];
-      const lon = params['lon'];
+    if (roadId) {
+      this.initByRoad({
+        roadId,
+        km,
+        year,
+        direction
+      });
+      return;
+    }
 
-      if (lon != null && lat != null) {
-        this.initByCoordinates({
-          lat: +lat,
-          lon: +lon
-        });
-      }
-    });
+    const lat = queryParams['lat'];
+    const lon = queryParams['lon'];
+
+    if (lon != null && lat != null) {
+      this.initByCoordinates({
+        lat: +lat,
+        lon: +lon
+      });
+    }
   }
 
   nextPhoto() {
@@ -210,6 +210,8 @@ export class PhotoViewComponent implements OnInit {
     this.selectedPassage = position.currentPassage;
 
     this.isInited = true;
+
+    this.setPositionToUrl();
 
     if (position.isNoNewPhoto) {
       this.toasterService.pop('info', 'Нет фото', 'Для текущего сегмента больше нет фотографий');
@@ -293,6 +295,17 @@ export class PhotoViewComponent implements OnInit {
 
   showRoadStatisticLoadingError() {
     this.toasterService.pop('error', 'Ошибка загрузки статистики по дороге');
+  }
+
+  setPositionToUrl() {
+    this.router.navigate(['photoview'], {
+      queryParams: {
+        roadId: this.roadId,
+        km: this.km,
+        year: this.date.getFullYear(),
+        direction: this.selectedPassage.direction,
+      }
+    });
   }
 
   handleAuthLoadingError(err) {
