@@ -22,6 +22,7 @@
 
 <app-position-movement
   [isInited]="isInited"
+  [stopMovement]="stopMovement"
   (previousPhoto)="emitPreviousPhoto()"
   (nextPhoto)="emitNextPhoto()"
   (selectRoad)="emitInitByRoad($event)"

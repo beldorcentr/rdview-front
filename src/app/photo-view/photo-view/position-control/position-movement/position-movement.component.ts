@@ -1,13 +1,15 @@
-import { Component, Input, EventEmitter, Output, HostListener } from '@angular/core';
+import { Component, Input, EventEmitter, Output, HostListener, OnInit } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-position-movement',
   templateUrl: './position-movement.component.html',
   styleUrls: ['./position-movement.component.scss']
 })
-export class PositionMovementComponent {
+export class PositionMovementComponent implements OnInit {
 
   @Input() isInited: boolean;
+  @Input() stopMovement: Subject<any>;
   @Output() previousPhoto = new EventEmitter();
   @Output() nextPhoto = new EventEmitter();
 
@@ -36,7 +38,13 @@ export class PositionMovementComponent {
     return this.movingIntervalMs / this.movingMultiplySpeed;
   }
 
-  constructor() { }
+  ngOnInit() {
+    if (this.stopMovement) {
+      this.stopMovement.subscribe(() => {
+        this.stop();
+      });
+    }
+  }
 
   previous() {
     this.previousPhoto.emit();

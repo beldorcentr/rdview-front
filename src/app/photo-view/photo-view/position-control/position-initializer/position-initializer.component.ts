@@ -1,9 +1,5 @@
 import { Component, Input, EventEmitter, Output, OnChanges } from '@angular/core';
-import { RoadService, Road } from 'rdview-service';
-import { AuthService } from 'app/shared/auth/auth.service';
-import { environment } from 'environments/environment';
-import { TypeaheadMatch } from 'ngx-bootstrap';
-import { Observable } from 'rxjs/Observable';
+import { Road } from 'rdview-service';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/fromPromise';
 
@@ -32,16 +28,7 @@ export class PositionInitializerComponent implements OnChanges {
   selectedLat: number;
   selectedLon: number;
 
-  private roadService: RoadService;
-
-  constructor(private authService: AuthService) {
-    this.roadService = new RoadService({
-      apiUrl: environment.apiUrl,
-      authorization: this.authService.getAuthorizationHeader()
-    });
-  }
-
-  ngOnChanges(changes): void {
+  ngOnChanges(): void {
     this.selectedRoad = this.roadName;
     this.selectedKm = this.km;
     this.selectedLat = this.lat;

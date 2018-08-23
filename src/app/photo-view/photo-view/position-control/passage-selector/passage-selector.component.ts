@@ -28,8 +28,6 @@ export class PassageSelectorComponent implements OnChanges {
 
   private minWidthPartToDisplayPassageDate = .3;
 
-  constructor() { }
-
   ngOnChanges() {
     const numberOfKmMarksInPassages = Math.floor(this.endKm) - Math.ceil(this.beginKm) + 1;
     this.kmMarks = Array.from(Array(numberOfKmMarksInPassages).keys())

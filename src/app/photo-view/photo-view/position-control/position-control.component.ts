@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Passage, CurrentPosition } from 'rdview-service';
 import { RoadStatistic } from 'app/statistic/road-statistic';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-position-control',
@@ -27,11 +28,15 @@ export class PositionControlComponent {
   @Output() previousPhoto = new EventEmitter();
   @Output() selectPassage = new EventEmitter<{ passageId: string, km: number }>();
 
+  stopMovement = new Subject<any>();
+
   emitInitByCoordinates(event: { lat: number, lon: number}) {
+    this.stopMovement.next();
     this.initByCoordinates.emit(event);
   }
 
   emitInitByRoad(event: { roadId: number, km?: number }) {
+    this.stopMovement.next();
     this.initByRoad.emit(event);
   }
 
