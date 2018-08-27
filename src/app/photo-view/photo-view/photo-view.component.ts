@@ -14,6 +14,8 @@ import { LoadingIndicatorService } from 'app/shared/loading-indicator/loading-in
 import { StatisticService } from 'app/statistic/statistic.service';
 import { RoadStatistic } from 'app/statistic/road-statistic';
 
+const backgroundPhoto = require('assets/background.jpg');
+
 @Component({
   selector: 'app-photo-view',
   templateUrl: './photo-view.component.html',
@@ -138,6 +140,7 @@ export class PhotoViewComponent implements OnInit {
   ngOnInit() {
     this.wheelZoom = mouseWheelZoom({ element: this.photoElement.nativeElement });
     this.initPositionFromUrl();
+    this.wheelZoom.setSrc(backgroundPhoto);
   }
 
   initPositionFromUrl() {
