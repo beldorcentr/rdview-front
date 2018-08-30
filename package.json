@@ -8,7 +8,7 @@
     "start:proxy-icentr": "ng serve --proxy-config proxy-icentr.conf.json",
     "start:proxy-localhost": "ng serve --proxy-config proxy-localhost.conf.json",
     "build": "ng build --base-href /rdview/ --aot --prod",
-    "build:staging": "ng build --base-href /rdview/ --aot --prod --env=staging",
+    "build:staging": "ng build --base-href /rdview/ --aot --prod --configuration=staging",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
