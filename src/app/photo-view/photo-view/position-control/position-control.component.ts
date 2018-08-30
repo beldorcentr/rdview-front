@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Passage, CurrentPosition } from 'rdview-service';
 import { RoadStatistic } from 'app/statistic/road-statistic';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-position-control',

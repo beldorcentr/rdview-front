@@ -1,7 +1,7 @@
 import { Component, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { Road } from 'rdview-service';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/fromPromise';
+
+
 
 @Component({
   selector: 'app-position-initializer',

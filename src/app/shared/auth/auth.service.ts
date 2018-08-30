@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -9,7 +9,7 @@ export class AuthService {
   isAuthorized: boolean;
 
   private userData: any;
-  private userActionsUrl = 'api/v1/users/actions';
+  private userActionsUrl = 'api/v1.1/users/actions';
 
 
   constructor(private http: HttpClient,

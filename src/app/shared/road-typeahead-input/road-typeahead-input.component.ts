@@ -3,9 +3,9 @@ import { RoadService, Road } from 'rdview-service';
 import { AuthService } from 'app/shared/auth/auth.service';
 import { environment } from 'environments/environment';
 import { TypeaheadMatch } from 'ngx-bootstrap';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/fromPromise';
+import { Observable } from 'rxjs';
+
+
 
 @Component({
   selector: 'app-road-typeahead-input',

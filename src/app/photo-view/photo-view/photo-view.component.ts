@@ -6,10 +6,8 @@ import { environment } from 'environments/environment';
 import { ToasterService } from 'angular2-toaster';
 import { mouseWheelZoom, MouseWheelZoom  } from 'mouse-wheel-zoom';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { switchMap } from 'rxjs/operators';
-import { merge } from 'rxjs/observable/merge';
-import { Subject } from 'rxjs/Subject';
+import { Observable, merge, from, Subject } from 'rxjs';
+import { switchMap, mergeMap, share } from 'rxjs/operators';
 import { LoadingIndicatorService } from 'app/shared/loading-indicator/loading-indicator.service';
 import { StatisticService } from 'app/statistic/statistic.service';
 import { RoadStatistic } from 'app/statistic/road-statistic';
@@ -94,13 +92,13 @@ export class PhotoViewComponent implements OnInit {
   initCurrentPositionStreams() {
     this.currentPosition$ = merge(
       this.initPosition$,
-      this.nextPhoto$.flatMap(() =>
-        Observable.fromPromise(this.rdviewService.getNextPhoto())
-      ),
-      this.previousPhoto$.flatMap(() =>
-        Observable.fromPromise(this.rdviewService.getPreviousPhoto())
-      )
-    ).share();
+      this.nextPhoto$.pipe(mergeMap(() =>
+        from(this.rdviewService.getNextPhoto())
+      )),
+      this.previousPhoto$.pipe(mergeMap(() =>
+        from(this.rdviewService.getPreviousPhoto())
+      ))
+    ).pipe(share());
 
     this.currentPosition$.subscribe(
       currentPosition => this.handleNewPosition(currentPosition),
