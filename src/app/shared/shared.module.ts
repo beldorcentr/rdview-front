@@ -15,6 +15,7 @@ import { TypeaheadModule } from 'ngx-bootstrap';
 import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 import { LoadingIndicatorService } from './loading-indicator/loading-indicator.service';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { AuthStatisticsService } from './auth/auth-statistics.service';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     AuthGuardService,
     MapGuardService,
     AuthService,
+    AuthStatisticsService,
     LoadingIndicatorService
   ],
   exports: [
