@@ -28,6 +28,8 @@ export function loadConfig(oidcConfigService: OidcConfigService) {
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { StatisticModule } from './statistic/statistic.module';
+import { AuthService } from './shared/auth/auth.service';
+import { AuthStatisticsService } from './shared/auth/auth-statistics.service';
 registerLocaleData(localeRu, 'ru');
 
 @NgModule({
@@ -66,8 +68,11 @@ registerLocaleData(localeRu, 'ru');
 export class AppModule {
 
   constructor(private oidcSecurityService: OidcSecurityService,
-      private oidcConfigService: OidcConfigService) {
+      private oidcConfigService: OidcConfigService,
+      private authServer: AuthService,
+      private authStatisticsService: AuthStatisticsService) {
     this.configureOauth();
+    this.logvisit();
   }
 
   private configureOauth() {
@@ -77,6 +82,18 @@ export class AppModule {
       } catch (err) {
         // OAuth init error
         alert('Произошла ошибка настройки авторизации. Приложение не сможет работать.');
+      }
+    });
+  }
+
+  private logvisit() {
+    if (!environment.production) {
+      return;
+    }
+    const isAuthorized$ = this.authServer.getIsAuthorized().subscribe(isAuthorized => {
+      if (isAuthorized) {
+        this.authStatisticsService.logVisit();
+        isAuthorized$.unsubscribe();
       }
     });
   }
